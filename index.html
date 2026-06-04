@@ -1152,5 +1152,99 @@
   }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c));
 </script>
-</body>
+<!-- CHAT WIDGET GANAMOSNET -->
+<style>
+  #chat-fab { position:fixed; bottom:28px; right:28px; width:58px; height:58px; border-radius:50%; background:#1a1a1a; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(0,0,0,0.18); transition:transform 0.2s,box-shadow 0.2s; z-index:9999; }
+  #chat-fab:hover { transform:scale(1.08); }
+  #chat-fab .icon-open { opacity:1; position:absolute; transition:opacity 0.2s; }
+  #chat-fab .icon-close { opacity:0; position:absolute; transition:opacity 0.2s; }
+  #chat-fab.open .icon-open { opacity:0; }
+  #chat-fab.open .icon-close { opacity:1; }
+  #chat-badge { position:absolute; top:-4px; right:-4px; width:18px; height:18px; border-radius:50%; background:#e74c3c; color:#fff; font-size:11px; font-weight:600; display:none; align-items:center; justify-content:center; }
+  #chat-window { position:fixed; bottom:100px; right:28px; width:360px; max-height:530px; background:#fff; border-radius:20px; border:1px solid #e8e8e8; box-shadow:0 8px 40px rgba(0,0,0,0.14); display:flex; flex-direction:column; transform:scale(0.92) translateY(12px); transform-origin:bottom right; opacity:0; pointer-events:none; transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1); z-index:9998; overflow:hidden; }
+  #chat-window.open { transform:scale(1) translateY(0); opacity:1; pointer-events:all; }
+  .cw-header { background:#1a1a1a; color:#fff; padding:18px 20px; display:flex; align-items:center; gap:12px; }
+  .cw-avatar { width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+  .cw-info h4 { font-size:15px; font-weight:600; margin-bottom:2px; }
+  .cw-info span { font-size:12px; opacity:0.7; display:flex; align-items:center; gap:5px; }
+  .cw-dot { width:7px; height:7px; border-radius:50%; background:#4ade80; }
+  .cw-msgs { flex:1; overflow-y:auto; padding:18px 16px; display:flex; flex-direction:column; gap:10px; scroll-behavior:smooth; }
+  .cw-bubble { max-width:78%; padding:10px 14px; border-radius:16px; font-size:14px; line-height:1.5; animation:cwFade 0.18s ease; font-family:'DM Sans',sans-serif; }
+  @keyframes cwFade { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+  .cw-bubble.recv { background:#f2f2f2; color:#1a1a1a; align-self:flex-start; border-bottom-left-radius:4px; }
+  .cw-bubble.sent { background:#1a1a1a; color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .cw-meta { font-size:11px; opacity:0.5; margin-top:3px; }
+  .cw-pre { padding:16px; border-top:1px solid #f0f0f0; }
+  .cw-pre p { font-size:13px; color:#555; margin-bottom:10px; font-family:'DM Sans',sans-serif; }
+  .cw-pre input { width:100%; padding:9px 12px; border:1px solid #e0e0e0; border-radius:8px; font-size:14px; margin-bottom:8px; font-family:inherit; outline:none; transition:border-color 0.15s; }
+  .cw-pre input:focus { border-color:#1a1a1a; }
+  .cw-btn-start { width:100%; padding:10px; background:#1a1a1a; color:#fff; border:none; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer; font-family:inherit; }
+  .cw-btn-start:disabled { opacity:0.5; cursor:default; }
+  .cw-input { padding:12px 14px; border-top:1px solid #f0f0f0; display:none; gap:8px; align-items:flex-end; }
+  .cw-input textarea { flex:1; border:1px solid #e0e0e0; border-radius:10px; padding:9px 12px; font-size:14px; font-family:inherit; resize:none; outline:none; line-height:1.5; max-height:100px; transition:border-color 0.15s; }
+  .cw-input textarea:focus { border-color:#1a1a1a; }
+  .cw-send { width:38px; height:38px; border-radius:50%; background:#1a1a1a; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+</style>
+
+<button id="chat-fab" aria-label="Abrir chat">
+  <div id="chat-badge"></div>
+  <svg class="icon-open" width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2.5C7.75 2.5 3.5 6.53 3.5 11.5c0 2.2.82 4.22 2.17 5.81L4.5 21.5l4.66-1.49A10.1 10.1 0 0 0 13 20.5c5.25 0 9.5-4.03 9.5-9S18.25 2.5 13 2.5z" fill="white"/></svg>
+  <svg class="icon-close" width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M17 5L5 17M5 5l12 12" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
+</button>
+
+<div id="chat-window">
+  <div class="cw-header">
+    <div class="cw-avatar">👋</div>
+    <div class="cw-info"><h4>ganamosnet</h4><span><span class="cw-dot"></span>Respondemos en minutos</span></div>
+  </div>
+  <div class="cw-msgs" id="cw-msgs">
+    <div class="cw-bubble recv">¡Hola! Bienvenido/a 👋<br>¿En qué te puedo ayudar hoy?<div class="cw-meta">ahora</div></div>
+  </div>
+  <div class="cw-pre" id="cw-pre">
+    <p>Dejanos un dato para responderte:</p>
+    <input type="text" id="cw-name" placeholder="Tu nombre" autocomplete="off"/>
+    <input type="text" id="cw-contact" placeholder="Email o teléfono" autocomplete="off"/>
+    <button class="cw-btn-start" id="cw-start">Iniciar chat →</button>
+  </div>
+  <div class="cw-input" id="cw-input">
+    <textarea id="cw-msg" rows="1" placeholder="Escribe tu mensaje..."></textarea>
+    <button class="cw-send" id="cw-send"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14.5 8L1.5 1.5 4.5 8 1.5 14.5 14.5 8z" fill="white"/></svg></button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, doc, updateDoc, onSnapshot, arrayUnion, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  const firebaseConfig = { apiKey:"AIzaSyAw6aV8a0aJyrOA_5miXajbojv1JKEJ4jg", authDomain:"ganamosnet-12cca.firebaseapp.com", projectId:"ganamosnet-12cca", storageBucket:"ganamosnet-12cca.firebasestorage.app", messagingSenderId:"337775620491", appId:"1:337775620491:web:8978522a1ace8e2e8c7f8e" };
+  const db = getFirestore(initializeApp(firebaseConfig));
+  const fab=document.getElementById('chat-fab'), win=document.getElementById('chat-window'), msgs=document.getElementById('cw-msgs');
+  let convRef=null, userName='';
+  fab.addEventListener('click',()=>{ fab.classList.toggle('open'); win.classList.toggle('open'); document.getElementById('chat-badge').style.display='none'; if(win.classList.contains('open')) msgs.scrollTop=msgs.scrollHeight; });
+  setTimeout(()=>{ if(!win.classList.contains('open')){ const b=document.getElementById('chat-badge'); b.style.display='flex'; b.textContent='1'; }},4000);
+  document.getElementById('cw-start').addEventListener('click', startChat);
+  document.getElementById('cw-name').addEventListener('keydown',e=>{ if(e.key==='Enter') document.getElementById('cw-contact').focus(); });
+  document.getElementById('cw-contact').addEventListener('keydown',e=>{ if(e.key==='Enter') startChat(); });
+  async function startChat(){
+    const name=document.getElementById('cw-name').value.trim(), contact=document.getElementById('cw-contact').value.trim();
+    if(!name||!contact){ document.getElementById('cw-name').style.borderColor=name?'#e0e0e0':'#e74c3c'; document.getElementById('cw-contact').style.borderColor=contact?'#e0e0e0':'#e74c3c'; return; }
+    userName=name; const btn=document.getElementById('cw-start'); btn.disabled=true; btn.textContent='Conectando...';
+    try {
+      const ref=await addDoc(collection(db,'conversations'),{ name, contact, status:'open', unread:true, started:serverTimestamp(), lastMessage:serverTimestamp(), messages:[{role:'bot',text:'¡Hola! Bienvenido/a 👋 ¿En qué te puedo ayudar?',time:new Date().toISOString()}] });
+      convRef=doc(db,'conversations',ref.id);
+      document.getElementById('cw-pre').style.display='none'; document.getElementById('cw-input').style.display='flex';
+      addBubble(`¡Genial, ${name}! Escribí tu consulta 😊`,'recv');
+      document.getElementById('cw-msg').focus();
+      let first=true;
+      onSnapshot(convRef,(snap)=>{ if(first){first=false;return;} const d=snap.data(); if(!d||!d.messages) return; const last=d.messages[d.messages.length-1]; if(last&&last.role==='agent') addBubble(last.text,'recv'); });
+    } catch(e){ btn.disabled=false; btn.textContent='Iniciar chat →'; addBubble('Error de conexión, intentá de nuevo.','recv'); }
+  }
+  document.getElementById('cw-send').addEventListener('click', send);
+  document.getElementById('cw-msg').addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();} });
+  document.getElementById('cw-msg').addEventListener('input',function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,100)+'px'; });
+  async function send(){ const i=document.getElementById('cw-msg'), t=i.value.trim(); if(!t||!convRef) return; i.value=''; i.style.height='auto'; addBubble(t,'sent'); try{ await updateDoc(convRef,{messages:arrayUnion({role:'user',text:t,time:new Date().toISOString()}),lastMessage:serverTimestamp(),unread:true}); }catch(e){console.error(e);} }
+  function addBubble(text,type){ const now=new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}); const d=document.createElement('div'); d.className=`cw-bubble ${type}`; d.innerHTML=esc(text)+`<div class="cw-meta">${now}</div>`; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; }
+  function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+<!-- FIN CHAT WIDGET --></body>
 </html>
