@@ -21,9 +21,7 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
-
   body {
     background: var(--dark);
     color: var(--white);
@@ -32,7 +30,6 @@
     cursor: default;
   }
 
-  /* NOISE OVERLAY */
   body::before {
     content: '';
     position: fixed;
@@ -43,7 +40,6 @@
     opacity: 0.4;
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -63,7 +59,6 @@
     background: linear-gradient(135deg, var(--gold), var(--gold2), #fff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: none;
     filter: drop-shadow(0 0 12px #FFD70077);
   }
 
@@ -83,12 +78,8 @@
     transition: all 0.2s;
     clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   }
-  .nav-cta:hover {
-    transform: scale(1.05);
-    box-shadow: var(--glow-gold);
-  }
+  .nav-cta:hover { transform: scale(1.05); box-shadow: var(--glow-gold); }
 
-  /* HERO */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -101,7 +92,6 @@
     overflow: hidden;
   }
 
-  /* GRID BG */
   .hero::after {
     content: '';
     position: absolute;
@@ -115,12 +105,10 @@
 
   .hero-glow {
     position: absolute;
-    width: 700px;
-    height: 700px;
+    width: 700px; height: 700px;
     border-radius: 50%;
     background: radial-gradient(circle, #7c3aed22 0%, #FFD70011 40%, transparent 70%);
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
     animation: pulseGlow 4s ease-in-out infinite alternate;
@@ -155,14 +143,12 @@
     position: relative;
     z-index: 1;
   }
-
   .hero-title .line1 {
     background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: block;
   }
-
   .hero-title .line2 {
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 60%, #fff 100%);
     -webkit-background-clip: text;
@@ -180,11 +166,7 @@
     line-height: 1.7;
     animation: fadeDown 1s ease 0.4s both;
   }
-
-  .hero-sub span {
-    color: var(--gold);
-    font-weight: 700;
-  }
+  .hero-sub span { color: var(--gold); font-weight: 700; }
 
   .hero-buttons {
     display: flex;
@@ -221,10 +203,7 @@
     transition: left 0.4s;
   }
   .btn-primary:hover::before { left: 100%; }
-  .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--glow-gold);
-  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--glow-gold); }
 
   .btn-secondary {
     background: transparent;
@@ -242,33 +221,16 @@
     transition: all 0.3s;
     clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
   }
-  .btn-secondary:hover {
-    background: var(--accent);
-    color: #000;
-    box-shadow: var(--glow-blue);
-    transform: translateY(-3px);
-  }
+  .btn-secondary:hover { background: var(--accent); color: #000; box-shadow: var(--glow-blue); transform: translateY(-3px); }
 
-  /* FLOATING CARDS */
-  .floating-icons {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .fi {
-    position: absolute;
-    font-size: 3rem;
-    opacity: 0.08;
-    animation: floatAround linear infinite;
-    filter: blur(1px);
-  }
-  .fi:nth-child(1)  { top: 15%; left:  8%; animation-duration: 18s; animation-delay: 0s; }
-  .fi:nth-child(2)  { top: 70%; left:  5%; animation-duration: 22s; animation-delay: -5s; }
-  .fi:nth-child(3)  { top: 25%; right: 6%; animation-duration: 20s; animation-delay: -3s; }
-  .fi:nth-child(4)  { top: 65%; right: 8%; animation-duration: 16s; animation-delay: -8s; }
-  .fi:nth-child(5)  { top: 45%; left: 15%; animation-duration: 25s; animation-delay: -11s; }
-  .fi:nth-child(6)  { top: 80%; right:15%; animation-duration: 19s; animation-delay: -2s; }
+  .floating-icons { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .fi { position: absolute; font-size: 3rem; opacity: 0.08; animation: floatAround linear infinite; filter: blur(1px); }
+  .fi:nth-child(1) { top: 15%; left:  8%; animation-duration: 18s; animation-delay: 0s; }
+  .fi:nth-child(2) { top: 70%; left:  5%; animation-duration: 22s; animation-delay: -5s; }
+  .fi:nth-child(3) { top: 25%; right: 6%; animation-duration: 20s; animation-delay: -3s; }
+  .fi:nth-child(4) { top: 65%; right: 8%; animation-duration: 16s; animation-delay: -8s; }
+  .fi:nth-child(5) { top: 45%; left: 15%; animation-duration: 25s; animation-delay: -11s; }
+  .fi:nth-child(6) { top: 80%; right:15%; animation-duration: 19s; animation-delay: -2s; }
 
   @keyframes floatAround {
     0%   { transform: translateY(0)   rotate(0deg); }
@@ -276,22 +238,17 @@
     100% { transform: translateY(0)   rotate(360deg); }
   }
 
-  /* STATS BAR */
   .stats-bar {
     background: linear-gradient(135deg, var(--dark2), var(--dark3));
     border-top: 1px solid rgba(255,215,0,0.15);
     border-bottom: 1px solid rgba(255,215,0,0.15);
-    padding: 2rem 2rem;
+    padding: 2rem;
     display: flex;
     justify-content: center;
     gap: 4rem;
     flex-wrap: wrap;
-    animation: fadeIn 1s ease both;
   }
-
-  .stat {
-    text-align: center;
-  }
+  .stat { text-align: center; }
   .stat-num {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 2.8rem;
@@ -310,13 +267,7 @@
     margin-top: 0.2rem;
   }
 
-  /* GAMES SECTION */
-  .section {
-    padding: 6rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
+  .section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
   .section-label {
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.75rem;
@@ -328,43 +279,12 @@
     align-items: center;
     gap: 0.8rem;
   }
-  .section-label::before {
-    content: '';
-    display: inline-block;
-    width: 30px;
-    height: 1px;
-    background: var(--accent);
-  }
+  .section-label::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; letter-spacing: 2px; margin-bottom: 1rem; }
+  .section-title .highlight { background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .section-desc { color: #6a80a0; font-size: 1.05rem; max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
 
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-  }
-
-  .section-title .highlight {
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .section-desc {
-    color: #6a80a0;
-    font-size: 1.05rem;
-    max-width: 500px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
-  }
-
-  /* GAME CARDS */
-  .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.2rem;
-  }
-
+  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
   .game-card {
     background: linear-gradient(135deg, var(--dark2), var(--dark3));
     border: 1px solid rgba(255,255,255,0.05);
@@ -376,92 +296,20 @@
     position: relative;
     overflow: hidden;
   }
-  .game-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--accent));
-    transform: scaleX(0);
-    transition: transform 0.3s;
-  }
+  .game-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--accent)); transform: scaleX(0); transition: transform 0.3s; }
   .game-card:hover::before { transform: scaleX(1); }
-  .game-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,215,0,0.3);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.1);
-  }
+  .game-card:hover { transform: translateY(-6px); border-color: rgba(255,215,0,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.1); }
+  .game-icon { font-size: 3rem; margin-bottom: 1rem; display: block; filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
+  .game-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 0.4rem; }
+  .game-desc { font-size: 0.8rem; color: #5a7090; }
 
-  .game-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    display: block;
-    filter: drop-shadow(0 0 10px rgba(255,215,0,0.4));
-  }
-  .game-name {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--white);
-    margin-bottom: 0.4rem;
-  }
-  .game-desc {
-    font-size: 0.8rem;
-    color: #5a7090;
-  }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .feature-card { background: var(--dark2); border: 1px solid rgba(255,255,255,0.04); border-radius: 4px; padding: 2rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: border-color 0.3s; }
+  .feature-card:hover { border-color: rgba(0,229,255,0.3); }
+  .feature-icon { width: 48px; height: 48px; border-radius: 4px; background: linear-gradient(135deg, #00e5ff22, #7c3aed22); border: 1px solid rgba(0,229,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .feature-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--white); }
+  .feature-text { font-size: 0.85rem; color: #5a7090; line-height: 1.6; }
 
-  /* FEATURES */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .feature-card {
-    background: var(--dark2);
-    border: 1px solid rgba(255,255,255,0.04);
-    border-radius: 4px;
-    padding: 2rem;
-    display: flex;
-    gap: 1.2rem;
-    align-items: flex-start;
-    transition: border-color 0.3s;
-  }
-  .feature-card:hover {
-    border-color: rgba(0,229,255,0.3);
-  }
-
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 4px;
-    background: linear-gradient(135deg, #00e5ff22, #7c3aed22);
-    border: 1px solid rgba(0,229,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    flex-shrink: 0;
-  }
-
-  .feature-title {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    color: var(--white);
-  }
-  .feature-text {
-    font-size: 0.85rem;
-    color: #5a7090;
-    line-height: 1.6;
-  }
-
-  /* CTA SECTION */
   .cta-section {
     background: linear-gradient(135deg, var(--dark2) 0%, #1a0a2e 50%, var(--dark2) 100%);
     border-top: 1px solid rgba(255,215,0,0.1);
@@ -471,98 +319,70 @@
     position: relative;
     overflow: hidden;
   }
-  .cta-section::before {
+  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, #7c3aed18, transparent); }
+  .cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 4px; line-height: 1; position: relative; z-index: 1; margin-bottom: 1rem; }
+  .cta-sub { font-size: 1.1rem; color: #6a80a0; max-width: 480px; margin: 0 auto 2.5rem; position: relative; z-index: 1; }
+
+  footer { background: #020408; padding: 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); }
+  footer .logo { font-size: 1.4rem; display: block; margin-bottom: 0.5rem; }
+  footer p { font-size: 0.75rem; color: #2a3a50; letter-spacing: 1px; }
+
+  .divider { width: 60px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 1rem 0 2rem; }
+
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* BOTÓN WHATSAPP FLOTANTE */
+  #wa-fab {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    z-index: 9000;
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    background: #25D366;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: waPulse 2.5s ease-in-out infinite;
+  }
+  #wa-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.7); }
+  #wa-fab svg { width: 34px; height: 34px; fill: #fff; }
+  #wa-fab .wa-tooltip {
+    position: absolute;
+    right: 74px;
+    background: #fff;
+    color: #111;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+  }
+  #wa-fab .wa-tooltip::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 50%, #7c3aed18, transparent);
+    right: -6px; top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-right: none;
+    border-left-color: #fff;
   }
+  #wa-fab:hover .wa-tooltip { opacity: 1; transform: translateX(0); }
 
-  .cta-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    letter-spacing: 4px;
-    line-height: 1;
-    position: relative;
-    z-index: 1;
-    margin-bottom: 1rem;
-  }
-
-  .cta-sub {
-    font-size: 1.1rem;
-    color: #6a80a0;
-    max-width: 480px;
-    margin: 0 auto 2.5rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .whatsapp-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    background: linear-gradient(135deg, #25D366, #128C7E);
-    color: #fff;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 1rem 2.5rem;
-    border-radius: 2px;
-    text-decoration: none;
-    transition: all 0.3s;
-    position: relative;
-    z-index: 1;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    box-shadow: 0 0 30px rgba(37,211,102,0.3);
-  }
-  .whatsapp-btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 0 50px rgba(37,211,102,0.5);
-  }
-
-  /* FOOTER */
-  footer {
-    background: #020408;
-    padding: 2rem;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.04);
-  }
-  footer .logo { font-size: 1.4rem; display: block; margin-bottom: 0.5rem; }
-  footer p {
-    font-size: 0.75rem;
-    color: #2a3a50;
-    letter-spacing: 1px;
-  }
-
-  /* DIVIDER */
-  .divider {
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    margin: 1rem 0 2rem;
-  }
-
-  /* ANIMATIONS */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 4px 30px rgba(37,211,102,0.8), 0 0 0 10px rgba(37,211,102,0.1); }
   }
 
   @media (max-width: 600px) {
@@ -570,6 +390,7 @@
     .games-grid { grid-template-columns: repeat(2, 1fr); }
     nav { padding: 1rem; }
     .nav-cta { font-size: 0.8rem; padding: 0.5rem 1rem; }
+    #wa-fab { right: 14px; bottom: 16px; }
   }
 </style>
 </head>
@@ -578,7 +399,8 @@
 <!-- NAV -->
 <nav>
   <div class="logo">GanamosNet</div>
-<a href="https://ganamosnet.org" class="nav-cta">Jugá Ahora</a></nav>
+  <a href="https://ganamosnet.org" class="nav-cta">Jugá Ahora</a>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -604,7 +426,7 @@
   </p>
 
   <div class="hero-buttons">
-    <<a href="https://ganamosnet.org" class="btn-primary">🎰 JUGA AHORA
+    <a href="https://ganamosnet.org" class="btn-primary">🎰 Jugar Ahora</a>
     <a href="#juegos" class="btn-secondary">Ver Juegos</a>
   </div>
 </section>
@@ -637,38 +459,13 @@
     <div class="divider"></div>
     <p class="section-desc">Tragamonedas, póker, ruleta y mucho más. Todo sin costo, con emoción real.</p>
   </div>
-
   <div class="games-grid reveal">
-    <div class="game-card">
-      <span class="game-icon">🎰</span>
-      <div class="game-name">Tragamonedas</div>
-      <div class="game-desc">Slots con jackpots épicos</div>
-    </div>
-    <div class="game-card">
-      <span class="game-icon">🎡</span>
-      <div class="game-name">Ruleta</div>
-      <div class="game-desc">Europea y americana</div>
-    </div>
-    <div class="game-card">
-      <span class="game-icon">🃏</span>
-      <div class="game-name">Blackjack</div>
-      <div class="game-desc">21 en tiempo real</div>
-    </div>
-    <div class="game-card">
-      <span class="game-icon">♠️</span>
-      <div class="game-name">Póker</div>
-      <div class="game-desc">Texas Hold'em y más</div>
-    </div>
-    <div class="game-card">
-      <span class="game-icon">🎲</span>
-      <div class="game-name">Dados</div>
-      <div class="game-desc">Craps y baccarat</div>
-    </div>
-    <div class="game-card">
-      <span class="game-icon">💎</span>
-      <div class="game-name">VIP Lounge</div>
-      <div class="game-desc">Sala exclusiva premium</div>
-    </div>
+    <div class="game-card"><span class="game-icon">🎰</span><div class="game-name">Tragamonedas</div><div class="game-desc">Slots con jackpots épicos</div></div>
+    <div class="game-card"><span class="game-icon">🎡</span><div class="game-name">Ruleta</div><div class="game-desc">Europea y americana</div></div>
+    <div class="game-card"><span class="game-icon">🃏</span><div class="game-name">Blackjack</div><div class="game-desc">21 en tiempo real</div></div>
+    <div class="game-card"><span class="game-icon">♠️</span><div class="game-name">Póker</div><div class="game-desc">Texas Hold'em y más</div></div>
+    <div class="game-card"><span class="game-icon">🎲</span><div class="game-name">Dados</div><div class="game-desc">Craps y baccarat</div></div>
+    <div class="game-card"><span class="game-icon">💎</span><div class="game-name">VIP Lounge</div><div class="game-desc">Sala exclusiva premium</div></div>
   </div>
 </section>
 
@@ -681,427 +478,27 @@
       <div class="divider"></div>
     </div>
     <div class="features-grid reveal">
-      <div class="feature-card">
-        <div class="feature-icon">⚡</div>
-        <div>
-          <div class="feature-title">Instantáneo</div>
-          <div class="feature-text">Sin descargas. Jugá desde el navegador en segundos desde cualquier dispositivo.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <div>
-          <div class="feature-title">100% Seguro</div>
-          <div class="feature-text">Plataforma encriptada. Tus datos siempre protegidos.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🎁</div>
-        <div>
-          <div class="feature-title">Bonos diarios</div>
-          <div class="feature-text">Chips gratis todos los días. Torneos y premios especiales cada semana.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📱</div>
-        <div>
-          <div class="feature-title">Mobile First</div>
-          <div class="feature-text">Diseñado para celular. Jugá en el colectivo, en casa, donde quieras.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🏆</div>
-        <div>
-          <div class="feature-title">Torneos</div>
-          <div class="feature-text">Competí con jugadores de todo el país y subí al ranking.</div>
-        </div>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💬</div>
-        <div>
-          <div class="feature-title">Soporte 24/7</div>
-          <div class="feature-text">Nuestro equipo te responde por WhatsApp en minutos.</div>
-        </div>
-      </div>
+      <div class="feature-card"><div class="feature-icon">⚡</div><div><div class="feature-title">Instantáneo</div><div class="feature-text">Sin descargas. Jugá desde el navegador en segundos desde cualquier dispositivo.</div></div></div>
+      <div class="feature-card"><div class="feature-icon">🔒</div><div><div class="feature-title">100% Seguro</div><div class="feature-text">Plataforma encriptada. Tus datos siempre protegidos.</div></div></div>
+      <div class="feature-card"><div class="feature-icon">🎁</div><div><div class="feature-title">Bonos diarios</div><div class="feature-text">Chips gratis todos los días. Torneos y premios especiales cada semana.</div></div></div>
+      <div class="feature-card"><div class="feature-icon">📱</div><div><div class="feature-title">Mobile First</div><div class="feature-text">Diseñado para celular. Jugá en el colectivo, en casa, donde quieras.</div></div></div>
+      <div class="feature-card"><div class="feature-icon">🏆</div><div><div class="feature-title">Torneos</div><div class="feature-text">Competí con jugadores de todo el país y subí al ranking.</div></div></div>
+      <div class="feature-card"><div class="feature-icon">💬</div><div><div class="feature-title">Soporte 24/7</div><div class="feature-text">Nuestro equipo te responde por WhatsApp en minutos.</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section" >
+<section class="cta-section">
   <h2 class="cta-title">
     ¿LISTO PARA<br>
     <span style="background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GANAR?</span>
   </h2>
   <p class="cta-sub">Unite a miles de jugadores. Registrate gratis y empezá a jugar hoy mismo.</p>
-
-  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-    <a href="https://ganamosnet.org" class="btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.8rem;">
-      🎰 Jugar Ahora
-    </a>
-   
+  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1;">
+    <a href="https://ganamosnet.org" class="btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.8rem;">🎰 Jugar Ahora</a>
   </div>
 </section>
-
-<!-- CHATBOT -->
-<style>
-  #gn-bubble {
-    position: fixed;
-    bottom: 28px; right: 28px;
-    width: 62px; height: 62px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border: none;
-    cursor: pointer;
-    z-index: 9000;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 0 24px #FFD70088, 0 4px 16px #0008;
-    transition: transform 0.2s;
-  }
-  #gn-bubble:hover { transform: scale(1.1); }
-
-  #gn-window {
-    position: fixed;
-    bottom: 104px; right: 28px;
-    width: 340px;
-    max-height: 520px;
-    background: #0a0f1e;
-    border: 1px solid #FFD70055;
-    border-radius: 16px;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-    z-index: 8999;
-    box-shadow: 0 0 40px #FFD70022, 0 8px 40px #000a;
-    font-family: 'Exo 2', sans-serif;
-    transition: opacity 0.25s, transform 0.25s;
-  }
-  #gn-window.gn-hidden {
-    opacity: 0; pointer-events: none;
-    transform: translateY(16px) scale(0.97);
-  }
-
-  .gn-header {
-    background: linear-gradient(135deg, #111827, #0a0f1e);
-    padding: 14px 16px;
-    display: flex; align-items: center; gap: 10px;
-    border-bottom: 1px solid #FFD70033;
-  }
-  .gn-avatar {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-  .gn-hname { font-size: 14px; font-weight: 700; color: #FFD700; letter-spacing: 1px; }
-  .gn-hstatus { font-size: 11px; color: #4ade80; margin-top: 1px; }
-  .gn-close {
-    margin-left: auto; background: none; border: none;
-    color: #ffffff55; font-size: 20px; cursor: pointer; line-height: 1;
-    transition: color 0.2s;
-  }
-  .gn-close:hover { color: #FFD700; }
-
-  .gn-msgs {
-    flex: 1; overflow-y: auto; padding: 14px 12px;
-    display: flex; flex-direction: column; gap: 10px;
-    max-height: 330px;
-    scrollbar-width: thin; scrollbar-color: #FFD70033 transparent;
-  }
-
-  .gn-msg {
-    max-width: 88%; padding: 9px 13px;
-    border-radius: 12px; font-size: 13px; line-height: 1.55;
-    white-space: pre-line;
-  }
-  .gn-msg.bot {
-    background: #1a2035; color: #e0e8ff;
-    border-bottom-left-radius: 4px; align-self: flex-start;
-    border: 1px solid #ffffff08;
-  }
-  .gn-msg.user {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: #000; font-weight: 600;
-    border-bottom-right-radius: 4px; align-self: flex-end;
-  }
-
-  .gn-opts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-  .gn-opt {
-    background: transparent;
-    border: 1px solid #FFD70066; color: #FFD700;
-    padding: 6px 13px; border-radius: 20px;
-    font-size: 12px; font-family: 'Exo 2', sans-serif;
-    cursor: pointer; transition: background 0.2s, color 0.2s;
-  }
-  .gn-opt:hover { background: #FFD70022; }
-  .gn-opt:disabled { opacity: 0.4; cursor: default; }
-
-  .gn-typing {
-    display: flex; gap: 5px; align-items: center;
-    padding: 10px 14px; background: #1a2035;
-    border-radius: 12px; border-bottom-left-radius: 4px;
-    align-self: flex-start; border: 1px solid #ffffff08;
-  }
-  .gn-typing span {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #FFD70088;
-    animation: gnblink 1.2s infinite;
-  }
-  .gn-typing span:nth-child(2) { animation-delay: 0.2s; }
-  .gn-typing span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes gnblink { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
-
-  .gn-input-row {
-    padding: 10px 12px;
-    border-top: 1px solid #FFD70022;
-    display: flex; gap: 8px; align-items: center;
-  }
-  .gn-input-row input {
-    flex: 1; background: #111827; border: 1px solid #FFD70033;
-    border-radius: 20px; padding: 8px 14px;
-    color: #e0e8ff; font-size: 13px; font-family: 'Exo 2', sans-serif;
-    outline: none; transition: border-color 0.2s;
-  }
-  .gn-input-row input:focus { border-color: #FFD700aa; }
-  .gn-input-row input::placeholder { color: #4a5568; }
-  .gn-send {
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    border: none; border-radius: 50%;
-    width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 16px; flex-shrink: 0;
-    transition: transform 0.2s;
-  }
-  .gn-send:hover { transform: scale(1.1); }
-
-  #gn-notif {
-    position: absolute; top: -4px; right: -4px;
-    width: 18px; height: 18px; border-radius: 50%;
-    background: #ef4444; color: #fff;
-    font-size: 11px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    border: 2px solid #0a0f1e;
-  }
-
-  @media (max-width: 420px) {
-    #gn-window { width: calc(100vw - 20px); right: 10px; bottom: 90px; }
-    #gn-bubble { right: 14px; bottom: 18px; }
-  }
-</style>
-
-<div style="position:fixed;bottom:28px;right:28px;z-index:9001;">
-  <button id="gn-bubble" onclick="gnToggle()" aria-label="Abrir chat de soporte">
-    🎰
-    <div id="gn-notif">1</div>
-  </button>
-</div>
-
-<div id="gn-window" class="gn-hidden" role="dialog" aria-label="Chat GanamosNet">
-  <div class="gn-header">
-    <div class="gn-avatar">🃏</div>
-    <div>
-      <div class="gn-hname">LUCKY — Asistente</div>
-      <div class="gn-hstatus">● En línea ahora</div>
-    </div>
-    <button class="gn-close" onclick="gnToggle()" aria-label="Cerrar chat">✕</button>
-  </div>
-  <div class="gn-msgs" id="gn-msgs"></div>
-  <div class="gn-input-row">
-    <input type="text" id="gn-input" placeholder="Escribí tu consulta..." onkeydown="if(event.key==='Enter')gnSend()" />
-    <button class="gn-send" onclick="gnSend()" aria-label="Enviar">➤</button>
-  </div>
-</div>
-
-<script>
-(function(){
-  const flow = [
-    {
-      id:"welcome",
-      msg:"¡Bienvenido/a a GanamosNet! 🎰\n\nSoy Lucky, tu asistente. Acá jugás con fichas virtuales — \n\n¿En qué te puedo ayudar?",
-      opts:["Ver juegos disponibles","!Quiero mi usuario y mi bono de bienvenida!",]
-    },
-    {
-      id:"juegos", trigger:"Ver juegos disponibles",
-      msg:"Tenemos más de 200 juegos:\n\n🎰 Tragamonedas — Jackpots épicos\n🎡 Ruleta — Europea y americana\n🃏 Blackjack — 21 en tiempo real\n♠️ Póker — Texas Hold'em\n🎲 Dados y Baccarat\n💎 VIP Lounge exclusivo\n\n¿Querés empezar?",
-      opts:["Registrarme ahora","¿Cómo funcionan las fichas?","Volver"]
-    },
-    {
-      id:"registro", trigger:"¿Cómo me registro?",
-      msg:"Es muy fácil y tarda menos de 1 minuto:\n\n1️⃣ Hacé clic en \"Jugar Ahora\"\n2️⃣ Ingresá tu nombre y mail\n3️⃣ ¡Listo! Recibís 1.000 fichas gratis al instante 🎁",
-      opts:["¡Quiero mis fichas!","Ver juegos disponibles","Volver"]
-    },
-    {
-      id:"fichas", trigger:"¿Cómo funcionan las fichas?",
-      msg:"Las fichas son nuestra moneda virtual:\n\n🎁 1.000 fichas gratis al registrarte\n📅 100 fichas de bono todos los días\n🏆 Fichas extra ganando torneos\n💸 No tienen valor monetario real\n\n¡Solo sirven para divertirte!",
-      opts:["¡Me registro ahora!","Ver juegos disponibles","Volver"]
-    },
-    {
-      id:"soporte", trigger:"Hablar con soporte",
-      msg:"Nuestro equipo está disponible 24/7 por WhatsApp. Te respondemos en minutos 💬",
-      opts:["Abrir WhatsApp","Volver"]
-    },
-    {
-      id:"wa", trigger:"Abrir WhatsApp",
-      msg:"Te redirigimos a WhatsApp ahora mismo. ¡Hasta pronto! 👋",
-      opts:[], action: "wa"
-    },
-    {
-      id:"empezar", trigger:"¡Quiero mis fichas!",
-      msg:"¡Genial! 🔥 Hacé clic abajo para crear tu cuenta gratis y recibir tus 1.000 fichas al instante.",
-      opts:["Ir a registrarme","Volver"], action:"reg"
-    },
-    {
-      id:"empezar2", trigger:"Registrarme ahora",
-      msg:"¡Perfecto! Hacé clic abajo para crear tu cuenta gratis. Solo lleva 30 segundos ⚡",
-      opts:["Ir a registrarme","Volver"], action:"reg"
-    },
-    {
-      id:"empezar3", trigger:"¡Me registro ahora!",
-      msg:"¡Excelente elección! 🌟 Tu cuenta gratis te espera.",
-      opts:["Ir a registrarme","Volver"], action:"reg"
-    },
-    {
-      id:"volver", trigger:"Volver",
-      msg:"¿En qué más te puedo ayudar?",
-      opts:["Ver juegos disponibles","¿Cómo me registro?","¿Cómo funcionan las fichas?","Hablar con soporte"]
-    },
-    {
-      id:"default",
-      msg:"¡Buena pregunta! 😄 ¿Te puedo ayudar con alguno de estos temas?",
-      opts:["Ver juegos disponibles","¿Cómo me registro?","¿Cómo funcionan las fichas?","Hablar con soporte"]
-    }
-  ];
-
-  let opened = false;
-
-  window.gnToggle = function(){
-    const w = document.getElementById('gn-window');
-    const notif = document.getElementById('gn-notif');
-    w.classList.toggle('gn-hidden');
-    if(notif) notif.remove();
-    if(!opened){
-      opened = true;
-      setTimeout(()=>gnShowBot(flow[0]), 500);
-    }
-  };
-
-  function gnShowBot(step){
-    const msgs = document.getElementById('gn-msgs');
-    const t = document.createElement('div');
-    t.className = 'gn-typing';
-    t.innerHTML = '<span></span><span></span><span></span>';
-    msgs.appendChild(t);
-    msgs.scrollTop = msgs.scrollHeight;
-    setTimeout(()=>{
-      t.remove();
-      const d = document.createElement('div');
-      d.className = 'gn-msg bot';
-      d.innerText = step.msg;
-      msgs.appendChild(d);
-      if(step.action === 'reg'){
-        const btn = document.createElement('div');
-        btn.className = 'gn-opts';
-        const b = document.createElement('button');
-        b.className = 'gn-opt';
-        b.innerText = '🎰 Ir a registrarme';
-        b.onclick = ()=>{ window.location.href='https://ganamosnet.org'; };
-        btn.appendChild(b);
-        const bk = document.createElement('button');
-        bk.className = 'gn-opt';
-        bk.innerText = 'Volver';
-        bk.onclick = ()=>{ gnHandleOpt('Volver', btn); };
-        btn.appendChild(bk);
-        msgs.appendChild(btn);
-      } else if(step.opts && step.opts.length){
-        const wrap = document.createElement('div');
-        wrap.className = 'gn-opts';
-        step.opts.forEach(o=>{
-          const b = document.createElement('button');
-          b.className = 'gn-opt'; b.innerText = o;
-          b.onclick = ()=>gnHandleOpt(o, wrap);
-          wrap.appendChild(b);
-        });
-        msgs.appendChild(wrap);
-      }
-      if(step.action === 'wa'){
-        setTimeout(()=>{ gnAbrirWA(); },800);
-      }
-      msgs.scrollTop = msgs.scrollHeight;
-    }, 950);
-  }
-
-  function gnHandleOpt(text, wrap){
-    if(wrap) wrap.querySelectorAll('.gn-opt').forEach(b=>b.disabled=true);
-    gnAddUser(text);
-    const match = flow.find(f=>f.trigger===text) || flow.find(f=>f.id==='default');
-    setTimeout(()=>gnShowBot(match), 350);
-  }
-
-  window.gnSend = function(){
-    const inp = document.getElementById('gn-input');
-    const val = inp.value.trim(); if(!val) return;
-    inp.value = '';
-    gnAddUser(val);
-    const lc = val.toLowerCase();
-    const match = flow.find(f=>f.trigger && lc.includes(f.trigger.toLowerCase())) || flow.find(f=>f.id==='default');
-    setTimeout(()=>gnShowBot(match), 350);
-  };
-
-  // ── NÚMEROS DE WHATSAPP ──────────────────────────────────────────
-  // Para agregar más: copiá una línea y pegala con el nuevo número
-  const waNumeros = [
-    "5493541688662",
-    "5491165671204",
-  ];
-  const waMensaje = "Hola!%20Quiero%20jugar%20en%20GanamosNet";
-  let waIndex = Math.floor(Math.random() * waNumeros.length); // arranca aleatorio
-
-  function gnAbrirWA(){
-    const num = waNumeros[waIndex % waNumeros.length];
-    const url = "https://wa.me/" + num + "?text=" + waMensaje;
-    window.open(url, '_blank');
-    // Si el usuario vuelve al chat en menos de 4 seg, probablemente fue bloqueado
-    const t = Date.now();
-    const checkBack = setInterval(()=>{
-      if(document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 4000){
-        clearInterval(checkBack);
-        waIndex++;
-        const d = document.createElement('div');
-        d.className = 'gn-msg bot';
-        d.innerText = '¿No pudiste contactarnos? 😅 Probá con este otro número 👇';
-        const msgs = document.getElementById('gn-msgs');
-        msgs.appendChild(d);
-        const wrap = document.createElement('div');
-        wrap.className = 'gn-opts';
-        const b = document.createElement('button');
-        b.className = 'gn-opt';
-        b.innerText = '📲 Probar otro número';
-        b.onclick = ()=>{ b.disabled=true; gnAbrirWA(); };
-        wrap.appendChild(b);
-        msgs.appendChild(wrap);
-        msgs.scrollTop = msgs.scrollHeight;
-      }
-      if(Date.now() - t > 5000) clearInterval(checkBack);
-    }, 500);
-  }
-  // ─────────────────────────────────────────────────────────────────
-
-  window.gnAbrirWABtn = function(e){
-    e.preventDefault();
-    const num = waNumeros[Math.floor(Math.random() * waNumeros.length)];
-    const msg = encodeURIComponent("¡Hola! Quiero jugar en GanamosNet");
-    window.open("https://api.whatsapp.com/send?phone=" + num + "&text=" + msg, '_blank');
-  };
-
-  function gnAddUser(text){
-    const msgs = document.getElementById('gn-msgs');
-    const d = document.createElement('div');
-    d.className = 'gn-msg user'; d.innerText = text;
-    msgs.appendChild(d);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-})();
-</script>
 
 <!-- FOOTER -->
 <footer>
@@ -1109,19 +506,72 @@
   <p>© 2026 ganamosnet.org — Plataforma de juegos gratuitos online · Solo para mayores de 18 años</p>
 </footer>
 
-<script>
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
+<!-- BOTÓN WHATSAPP FLOTANTE CON ROTACIÓN -->
+<button id="wa-fab" aria-label="Contactar por WhatsApp" onclick="abrirWA()">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <div class="wa-tooltip">💬 Chateá con nosotros</div>
+</button>
 
+<script>
+// ═══════════════════════════════════════════════════════
+//  SISTEMA DE ROTACIÓN DE NÚMEROS WHATSAPP
+//  Para agregar/cambiar números: editá el array waNumeros
+//  Estado: "activo" | "revision" | "inactivo"
+// ═══════════════════════════════════════════════════════
+const waNumeros = [
+  { numero: "5493541688662", estado: "activo" },
+  { numero: "5491165671204", estado: "activo" },
+  // Agregá más números acá:
+  // { numero: "549XXXXXXXXXX", estado: "activo" },
+];
+
+const waMensaje = encodeURIComponent("¡Hola! Quiero jugar en GanamosNet 🎰");
+
+// Índice rotativo — cada usuario nuevo agarra el siguiente número activo
+let waIndex = parseInt(localStorage.getItem('gn_wa_idx') || '0');
+
+function getNumeroActivo() {
+  const activos = waNumeros.filter(n => n.estado === "activo");
+  if (!activos.length) return null;
+  const idx = waIndex % activos.length;
+  return activos[idx];
+}
+
+function abrirWA() {
+  const entry = getNumeroActivo();
+  if (!entry) {
+    alert("En este momento no hay líneas disponibles. Intentá en unos minutos.");
+    return;
+  }
+
+  const url = "https://wa.me/" + entry.numero + "?text=" + waMensaje;
+  const ventana = window.open(url, '_blank');
+
+  // Avanzar al siguiente número para el próximo usuario
+  waIndex++;
+  localStorage.setItem('gn_wa_idx', waIndex);
+
+  // Detectar si WhatsApp no abrió (número posiblemente en revisión)
+  const t = Date.now();
+  const check = setInterval(() => {
+    if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
+      clearInterval(check);
+      // Marcar número como en revisión y probar el siguiente
+      entry.estado = "revision";
+      abrirWA(); // reintenta con el siguiente automáticamente
+    }
+    if (Date.now() - t > 6000) clearInterval(check);
+  }, 500);
+}
+// ═══════════════════════════════════════════════════════
+</script>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Animated counters
   const counters = document.querySelectorAll('.stat-num');
   const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1135,12 +585,8 @@
         const step = num / 60;
         const timer = setInterval(() => {
           current += step;
-          if (current >= num) {
-            el.textContent = text;
-            clearInterval(timer);
-          } else {
-            el.textContent = Math.floor(current) + suffix;
-          }
+          if (current >= num) { el.textContent = text; clearInterval(timer); }
+          else { el.textContent = Math.floor(current) + suffix; }
         }, 20);
         counterObserver.unobserve(el);
       }
@@ -1148,5 +594,6 @@
   }, { threshold: 0.5 });
   counters.forEach(c => counterObserver.observe(c));
 </script>
-<script src="/chat-widget.js"></script>
+
+</body>
 </html>
