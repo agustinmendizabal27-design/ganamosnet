@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin WA — GanamosNet</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #f7f6f3; color: #1a1a1a; min-height: 100vh; padding: 2rem; }
+
+  .page-header { max-width: 700px; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .page-header h1 { font-size: 22px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+  .page-header h1 span { font-size: 13px; font-weight: 400; color: #888; }
+  .live-dot { width: 8px; height: 8px; border-radius: 50%; background: #25D366; display: inline-block; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .card { background: #fff; border-radius: 14px; border: 1px solid #ebebeb; max-width: 700px; margin: 0 auto 1.5rem; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; }
+  .card-header h2 { font-size: 15px; font-weight: 600; }
+  .card-header span { font-size: 12px; color: #aaa; }
+
+  .num-row { padding: 16px 20px; border-bottom: 1px solid #f5f5f5; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .num-row:last-child { border-bottom: none; }
+
+  .estado-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-activo { background: #25D366; box-shadow: 0 0 6px #25D36688; }
+  .dot-revision { background: #F59E0B; box-shadow: 0 0 6px #F59E0B88; }
+  .dot-inactivo { background: #ccc; }
+
+  .num-info { flex: 1; min-width: 160px; }
+  .num-tel { font-size: 15px; font-weight: 600; font-family: monospace; letter-spacing: 0.5px; }
+  .num-estado { font-size: 12px; margin-top: 2px; }
+  .estado-activo { color: #16a34a; }
+  .estado-revision { color: #d97706; }
+  .estado-inactivo { color: #aaa; }
+
+  .num-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .btn { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid; font-family: inherit; transition: all 0.15s; white-space: nowrap; }
+  .btn-green { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+  .btn-green:hover { background: #dcfce7; }
+  .btn-yellow { background: #fffbeb; color: #d97706; border-color: #fde68a; }
+  .btn-yellow:hover { background: #fef3c7; }
+  .btn-red { background: #fff1f2; color: #e11d48; border-color: #fecdd3; }
+  .btn-red:hover { background: #ffe4e6; }
+  .btn-dark { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  .btn-dark:hover { background: #333; }
+
+  .add-section { padding: 16px 20px; background: #fafafa; border-top: 1px solid #f0f0f0; display: flex; gap: 10px; flex-wrap: wrap; }
+  .add-section input { flex: 1; min-width: 180px; border: 1px solid #e0e0e0; border-radius: 8px; padding: 9px 13px; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
+  .add-section input:focus { border-color: #1a1a1a; }
+  .add-section input::placeholder { color: #bbb; }
+
+  .stats-row { display: flex; gap: 12px; max-width: 700px; margin: 0 auto 1.5rem; flex-wrap: wrap; }
+  .stat-box { flex: 1; min-width: 120px; background: #fff; border: 1px solid #ebebeb; border-radius: 12px; padding: 14px 18px; text-align: center; }
+  .stat-box .num { font-size: 28px; font-weight: 700; line-height: 1; }
+  .stat-box .lbl { font-size: 12px; color: #aaa; margin-top: 4px; }
+  .stat-activo .num { color: #16a34a; }
+  .stat-revision .num { color: #d97706; }
+  .stat-inactivo .num { color: #aaa; }
+
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; transition: transform 0.3s; z-index: 999;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .empty-msg { padding: 30px 20px; text-align: center; color: #bbb; font-size: 14px; }
+
+  .login-screen {
+    max-width: 360px; margin: 6rem auto; background: #fff;
+    border: 1px solid #ebebeb; border-radius: 16px; padding: 2rem;
+    text-align: center;
+  }
+  .login-screen h2 { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
+  .login-screen p { font-size: 13px; color: #888; margin-bottom: 1.5rem; }
+  .login-screen input { width: 100%; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 14px; font-size: 14px; font-family: inherit; outline: none; margin-bottom: 10px; }
+  .login-screen input:focus { border-color: #1a1a1a; }
+  .login-screen button { width: 100%; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+  #app { display: none; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+  <div style="font-size:32px;margin-bottom:12px;">🔐</div>
+  <h2>Panel de Números</h2>
+  <p>GanamosNet — Administración</p>
+  <input type="password" id="pwd-input" placeholder="Contraseña" onkeydown="if(event.key==='Enter')checkLogin()" />
+  <button onclick="checkLogin()">Ingresar</button>
+  <p id="login-err" style="color:#e11d48;font-size:12px;margin-top:8px;"></p>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="page-header">
+    <h1>📱 Números WhatsApp <span id="last-update"></span></h1>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#888;">
+      <span class="live-dot"></span> Tiempo real
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box stat-activo"><div class="num" id="cnt-activo">0</div><div class="lbl">🟢 Activos</div></div>
+    <div class="stat-box stat-revision"><div class="num" id="cnt-revision">0</div><div class="lbl">🟡 En revisión</div></div>
+    <div class="stat-box stat-inactivo"><div class="num" id="cnt-inactivo">0</div><div class="lbl">⚫ Inactivos</div></div>
+  </div>
+
+  <!-- LISTA DE NÚMEROS -->
+  <div class="card">
+    <div class="card-header">
+      <h2>Números configurados</h2>
+      <span id="total-label">0 números</span>
+    </div>
+    <div id="num-list"><div class="empty-msg">Cargando...</div></div>
+    <div class="add-section">
+      <input type="text" id="nuevo-num" placeholder="Nuevo número (ej: 5491165671204)" maxlength="20" onkeydown="if(event.key==='Enter')agregarNumero()" />
+      <button class="btn btn-dark" onclick="agregarNumero()">+ Agregar</button>
+    </div>
+  </div>
+
+  <!-- INSTRUCCIONES -->
+  <div class="card" style="padding:20px;">
+    <div style="font-size:13px;color:#888;line-height:1.8;">
+      <strong style="color:#1a1a1a;display:block;margin-bottom:8px;">¿Cómo funciona?</strong>
+      🟢 <strong>Activo</strong> — recibe usuarios nuevos desde la landing<br>
+      🟡 <strong>En revisión</strong> — saltea este número, los usuarios existentes pueden seguir escribiendo<br>
+      ⚫ <strong>Inactivo</strong> — excluido completamente de la rotación<br><br>
+      Los cambios se aplican <strong>en tiempo real</strong> en la landing page.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, onSnapshot, setDoc, getDoc }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAw6aV8a0aJyrOA_5miXajbojv1JKEJ4jg",
+    authDomain: "ganamosnet-12cca.firebaseapp.com",
+    projectId: "ganamosnet-12cca",
+    storageBucket: "ganamosnet-12cca.firebasestorage.app",
+    messagingSenderId: "337775620491",
+    appId: "1:337775620491:web:8978522a1ace8e2e8c7f8e"
+  };
+
+  // ── CONTRASEÑA ── cambiala por la tuya
+  const PASSWORD = "ganamosnet2026";
+
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db = getFirestore(app);
+  const REF = doc(db, 'config', 'whatsapp');
+
+  let numeros = [];
+
+  // LOGIN
+  window.checkLogin = function() {
+    const val = document.getElementById('pwd-input').value;
+    if (val === PASSWORD) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      iniciar();
+    } else {
+      document.getElementById('login-err').textContent = 'Contraseña incorrecta';
+    }
+  };
+
+  async function iniciar() {
+    // Cargar o inicializar
+    const snap = await getDoc(REF);
+    if (!snap.exists()) {
+      // Primera vez: cargar los números que ya tenías
+      numeros = [
+        { numero: "5493541688662", estado: "activo" },
+        { numero: "5491165671204", estado: "activo" }
+      ];
+      await guardar();
+    }
+
+    // Escuchar cambios en tiempo real
+    onSnapshot(REF, (snap) => {
+      if (snap.exists()) {
+        numeros = snap.data().numeros || [];
+        renderizar();
+        actualizarStats();
+        document.getElementById('last-update').textContent =
+          'Actualizado ' + new Date().toLocaleTimeString('es-AR', {hour:'2-digit',minute:'2-digit'});
+      }
+    });
+  }
+
+  async function guardar() {
+    await setDoc(REF, { numeros });
+  }
+
+  function renderizar() {
+    const list = document.getElementById('num-list');
+    document.getElementById('total-label').textContent = numeros.length + ' número' + (numeros.length !== 1 ? 's' : '');
+
+    if (!numeros.length) {
+      list.innerHTML = '<div class="empty-msg">No hay números configurados</div>';
+      return;
+    }
+
+    list.innerHTML = numeros.map((n, i) => {
+      const tel = formatTel(n.numero);
+      const dotClass = n.estado === 'activo' ? 'dot-activo' : n.estado === 'revision' ? 'dot-revision' : 'dot-inactivo';
+      const estadoClass = 'estado-' + n.estado;
+      const estadoLabel = n.estado === 'activo' ? '🟢 Activo — recibiendo usuarios' :
+                          n.estado === 'revision' ? '🟡 En revisión — salteando' :
+                          '⚫ Inactivo — excluido';
+
+      const btns = n.estado === 'activo'
+        ? `<button class="btn btn-yellow" onclick="cambiarEstado(${i},'revision')">Poner en revisión</button>
+           <button class="btn btn-red" onclick="cambiarEstado(${i},'inactivo')">Desactivar</button>`
+        : n.estado === 'revision'
+        ? `<button class="btn btn-green" onclick="cambiarEstado(${i},'activo')">Activar</button>
+           <button class="btn btn-red" onclick="cambiarEstado(${i},'inactivo')">Desactivar</button>`
+        : `<button class="btn btn-green" onclick="cambiarEstado(${i},'activo')">Activar</button>`;
+
+      return `<div class="num-row">
+        <div class="estado-dot ${dotClass}"></div>
+        <div class="num-info">
+          <div class="num-tel">${tel}</div>
+          <div class="num-estado ${estadoClass}">${estadoLabel}</div>
+        </div>
+        <div class="num-actions">
+          ${btns}
+          <button class="btn btn-red" onclick="eliminar(${i})">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function actualizarStats() {
+    document.getElementById('cnt-activo').textContent   = numeros.filter(n=>n.estado==='activo').length;
+    document.getElementById('cnt-revision').textContent = numeros.filter(n=>n.estado==='revision').length;
+    document.getElementById('cnt-inactivo').textContent = numeros.filter(n=>n.estado==='inactivo').length;
+  }
+
+  window.cambiarEstado = async function(i, nuevoEstado) {
+    numeros[i].estado = nuevoEstado;
+    await guardar();
+    toast('✅ Estado actualizado');
+  };
+
+  window.eliminar = async function(i) {
+    if (!confirm('¿Eliminar este número?')) return;
+    numeros.splice(i, 1);
+    await guardar();
+    toast('🗑️ Número eliminado');
+  };
+
+  window.agregarNumero = async function() {
+    const input = document.getElementById('nuevo-num');
+    const num = input.value.replace(/\D/g, '');
+    if (num.length < 10) { toast('⚠️ Número inválido'); return; }
+    if (numeros.find(n => n.numero === num)) { toast('⚠️ Ese número ya existe'); return; }
+    numeros.push({ numero: num, estado: 'activo' });
+    await guardar();
+    input.value = '';
+    toast('✅ Número agregado');
+  };
+
+  function formatTel(num) {
+    // formato visual: +54 9 XXX XXX-XXXX
+    if (num.startsWith('54') && num.length >= 12) {
+      return '+' + num.slice(0,2) + ' ' + num.slice(2,3) + ' ' + num.slice(3,6) + ' ' + num.slice(6,9) + '-' + num.slice(9);
+    }
+    return '+' + num;
+  }
+
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+</script>
+
+</body>
+</html>
