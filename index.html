@@ -2,597 +2,413 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GanamosNet – Jugá. Ganá. Divertite.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;700;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Red Estrella</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #FFD700;
-    --gold2: #FFA500;
-    --dark: #050810;
-    --dark2: #0a0f1e;
-    --dark3: #111827;
-    --accent: #00e5ff;
-    --accent2: #7c3aed;
-    --white: #f0f4ff;
-    --glow-gold: 0 0 20px #FFD70088, 0 0 60px #FFD70033;
-    --glow-blue: 0 0 20px #00e5ff88, 0 0 60px #00e5ff33;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #0a0005;
+    font-family: 'Oswald', sans-serif;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--dark);
-    color: var(--white);
-    font-family: 'Exo 2', sans-serif;
-    overflow-x: hidden;
-    cursor: default;
-  }
-
-  body::before {
-    content: '';
+  .landing {
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1.2rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to bottom, #050810ee, transparent);
-    backdrop-filter: blur(4px);
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 3px;
-    background: linear-gradient(135deg, var(--gold), var(--gold2), #fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 12px #FFD70077);
-  }
-
-  .nav-cta {
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    color: #000;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 0.6rem 1.6rem;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
-  }
-  .nav-cta:hover { transform: scale(1.05); box-shadow: var(--glow-gold); }
-
-  .hero {
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    position: relative;
-    padding: 8rem 2rem 4rem;
+    justify-content: space-between;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, #3d0a0a88 0%, transparent 60%),
+      radial-gradient(ellipse 80% 40% at 50% 100%, #1a0a0088 0%, transparent 50%),
+      linear-gradient(180deg, #0d0005 0%, #1a0308 40%, #0d0005 100%);
     overflow: hidden;
   }
 
-  .hero::after {
-    content: '';
+  /* Partículas flotantes */
+  .particles {
     position: absolute;
     inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 700px; height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #7c3aed22 0%, #FFD70011 40%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
     pointer-events: none;
-    animation: pulseGlow 4s ease-in-out infinite alternate;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FFD700cc, transparent);
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
   }
 
-  @keyframes pulseGlow {
-    from { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-    to   { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  /* Shine top */
+  .shine {
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #FFD70033 0%, transparent 70%);
+    animation: shinePulse 3s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes shinePulse {
+    from { opacity: 0.4; transform: translateX(-50%) scale(1); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1.3); }
+  }
+
+  /* BADGES TOP */
+  .badges {
+    width: 100%;
+    max-width: 420px;
+    padding: 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+    animation: fadeSlideDown 0.6s ease both;
+  }
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .badge {
-    display: inline-block;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    padding: 0.3rem 1rem;
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
-    animation: fadeDown 0.8s ease both;
-    box-shadow: 0 0 12px #00e5ff44;
-  }
-
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(4rem, 12vw, 9rem);
-    line-height: 0.9;
-    letter-spacing: 4px;
-    animation: fadeDown 1s ease 0.2s both;
-    position: relative;
-    z-index: 1;
-  }
-  .hero-title .line1 {
-    background: linear-gradient(135deg, #fff 30%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
-  }
-  .hero-title .line2 {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold2) 60%, #fff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
-    filter: drop-shadow(0 0 20px #FFD700aa);
-  }
-
-  .hero-sub {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: #a0b0cc;
-    max-width: 520px;
-    margin: 1.5rem auto 2.5rem;
-    line-height: 1.7;
-    animation: fadeDown 1s ease 0.4s both;
-  }
-  .hero-sub span { color: var(--gold); font-weight: 700; }
-
-  .hero-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: fadeDown 1s ease 0.6s both;
-  }
-
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    color: #000;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 1rem 2.5rem;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    transition: left 0.4s;
-  }
-  .btn-primary:hover::before { left: 100%; }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: var(--glow-gold); }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--accent);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 1rem 2.5rem;
-    border: 1px solid var(--accent);
-    border-radius: 2px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all 0.3s;
-    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
-  }
-  .btn-secondary:hover { background: var(--accent); color: #000; box-shadow: var(--glow-blue); transform: translateY(-3px); }
-
-  .floating-icons { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
-  .fi { position: absolute; font-size: 3rem; opacity: 0.08; animation: floatAround linear infinite; filter: blur(1px); }
-  .fi:nth-child(1) { top: 15%; left:  8%; animation-duration: 18s; animation-delay: 0s; }
-  .fi:nth-child(2) { top: 70%; left:  5%; animation-duration: 22s; animation-delay: -5s; }
-  .fi:nth-child(3) { top: 25%; right: 6%; animation-duration: 20s; animation-delay: -3s; }
-  .fi:nth-child(4) { top: 65%; right: 8%; animation-duration: 16s; animation-delay: -8s; }
-  .fi:nth-child(5) { top: 45%; left: 15%; animation-duration: 25s; animation-delay: -11s; }
-  .fi:nth-child(6) { top: 80%; right:15%; animation-duration: 19s; animation-delay: -2s; }
-
-  @keyframes floatAround {
-    0%   { transform: translateY(0)   rotate(0deg); }
-    50%  { transform: translateY(-30px) rotate(180deg); }
-    100% { transform: translateY(0)   rotate(360deg); }
-  }
-
-  .stats-bar {
-    background: linear-gradient(135deg, var(--dark2), var(--dark3));
-    border-top: 1px solid rgba(255,215,0,0.15);
-    border-bottom: 1px solid rgba(255,215,0,0.15);
-    padding: 2rem;
-    display: flex;
-    justify-content: center;
-    gap: 4rem;
-    flex-wrap: wrap;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    background: linear-gradient(135deg, var(--gold), var(--gold2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 8px #FFD70066);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #5a7090;
-    margin-top: 0.2rem;
-  }
-
-  .section { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
-  .section-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-  }
-  .section-label::before { content: ''; display: inline-block; width: 30px; height: 1px; background: var(--accent); }
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; letter-spacing: 2px; margin-bottom: 1rem; }
-  .section-title .highlight { background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-  .section-desc { color: #6a80a0; font-size: 1.05rem; max-width: 500px; line-height: 1.7; margin-bottom: 3rem; }
-
-  .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
-  .game-card {
-    background: linear-gradient(135deg, var(--dark2), var(--dark3));
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 4px;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    transition: all 0.3s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .game-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--accent)); transform: scaleX(0); transition: transform 0.3s; }
-  .game-card:hover::before { transform: scaleX(1); }
-  .game-card:hover { transform: translateY(-6px); border-color: rgba(255,215,0,0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.1); }
-  .game-icon { font-size: 3rem; margin-bottom: 1rem; display: block; filter: drop-shadow(0 0 10px rgba(255,215,0,0.4)); }
-  .game-name { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; color: var(--white); margin-bottom: 0.4rem; }
-  .game-desc { font-size: 0.8rem; color: #5a7090; }
-
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-  .feature-card { background: var(--dark2); border: 1px solid rgba(255,255,255,0.04); border-radius: 4px; padding: 2rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: border-color 0.3s; }
-  .feature-card:hover { border-color: rgba(0,229,255,0.3); }
-  .feature-icon { width: 48px; height: 48px; border-radius: 4px; background: linear-gradient(135deg, #00e5ff22, #7c3aed22); border: 1px solid rgba(0,229,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
-  .feature-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--white); }
-  .feature-text { font-size: 0.85rem; color: #5a7090; line-height: 1.6; }
-
-  .cta-section {
-    background: linear-gradient(135deg, var(--dark2) 0%, #1a0a2e 50%, var(--dark2) 100%);
-    border-top: 1px solid rgba(255,215,0,0.1);
-    border-bottom: 1px solid rgba(255,215,0,0.1);
-    padding: 6rem 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, #7c3aed18, transparent); }
-  .cta-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 8vw, 6rem); letter-spacing: 4px; line-height: 1; position: relative; z-index: 1; margin-bottom: 1rem; }
-  .cta-sub { font-size: 1.1rem; color: #6a80a0; max-width: 480px; margin: 0 auto 2.5rem; position: relative; z-index: 1; }
-
-  footer { background: #020408; padding: 2rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.04); }
-  footer .logo { font-size: 1.4rem; display: block; margin-bottom: 0.5rem; }
-  footer p { font-size: 0.75rem; color: #2a3a50; letter-spacing: 1px; }
-
-  .divider { width: 60px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 1rem 0 2rem; }
-
-  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* BOTÓN WHATSAPP FLOTANTE */
-  #wa-fab {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    z-index: 9000;
-    width: 62px; height: 62px;
-    border-radius: 50%;
-    background: #25D366;
-    border: none;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: waPulse 2.5s ease-in-out infinite;
-  }
-  #wa-fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.7); }
-  #wa-fab svg { width: 34px; height: 34px; fill: #fff; }
-  #wa-fab .wa-tooltip {
-    position: absolute;
-    right: 74px;
-    background: #fff;
-    color: #111;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 13px;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 15px;
     font-weight: 600;
-    padding: 8px 14px;
-    border-radius: 8px;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    opacity: 0;
-    transform: translateX(8px);
-    transition: opacity 0.2s, transform 0.2s;
-    pointer-events: none;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid;
+    backdrop-filter: blur(8px);
+    animation: fadeSlideDown 0.6s ease both;
   }
-  #wa-fab .wa-tooltip::after {
+  .badge-icon { font-size: 20px; flex-shrink: 0; }
+  .badge-text { flex: 1; }
+
+  .badge-1 {
+    background: linear-gradient(135deg, #1a0a00cc, #2d1000cc);
+    border-color: #FFD70066;
+    color: #FFD700;
+    animation-delay: 0.1s;
+  }
+  .badge-2 {
+    background: linear-gradient(135deg, #001a0acc, #002d1acc);
+    border-color: #00FF8866;
+    color: #00FF88;
+    animation-delay: 0.2s;
+  }
+  .badge-3 {
+    background: linear-gradient(135deg, #001a00cc, #003300cc);
+    border-color: #44FF4466;
+    color: #44FF44;
+    animation-delay: 0.3s;
+  }
+  .badge-4 {
+    background: linear-gradient(135deg, #FFD700ee, #FFA500ee);
+    border-color: #FFD700;
+    color: #000;
+    font-size: 17px;
+    font-weight: 700;
+    animation-delay: 0.4s;
+    box-shadow: 0 0 20px #FFD70066;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .badge-4:hover { transform: scale(1.02); box-shadow: 0 0 30px #FFD700aa; }
+  .badge-4 .badge-icon { font-size: 22px; }
+
+  /* LOGO CENTER */
+  .logo-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeScaleIn 0.8s ease 0.3s both;
+  }
+  @keyframes fadeScaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .logo-ring {
+    position: relative;
+    width: min(280px, 65vw);
+    height: min(280px, 65vw);
+  }
+  .logo-ring::before {
     content: '';
     position: absolute;
-    right: -6px; top: 50%;
-    transform: translateY(-50%);
-    border: 6px solid transparent;
-    border-right: none;
-    border-left-color: #fff;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(#FFD700, #FFA500, #FF6B00, #FFD700);
+    animation: rotateBorder 4s linear infinite;
+    opacity: 0.7;
   }
-  #wa-fab:hover .wa-tooltip { opacity: 1; transform: translateX(0); }
+  .logo-ring::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: #0d0005;
+  }
+  @keyframes rotateBorder {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .logo-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px #FFD70088);
+    animation: logoPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes logoPulse {
+    from { filter: drop-shadow(0 0 15px #FFD70066); }
+    to   { filter: drop-shadow(0 0 35px #FFD700cc); }
+  }
+
+  /* ACTIVOS badge */
+  .activos-badge {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #FFD70044;
+    border-radius: 30px;
+    color: #FFD700;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    animation: fadeSlideDown 0.6s ease 0.5s both;
+  }
+  .activos-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #00FF88;
+    box-shadow: 0 0 8px #00FF88;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* BOTÓN WHATSAPP */
+  .wa-section {
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 16px 20px;
+    position: relative;
+    z-index: 2;
+    animation: fadeSlideUp 0.6s ease 0.6s both;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wa-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4);
+    animation: waPulse 2s ease-in-out infinite;
+    transition: transform 0.15s;
+    text-decoration: none;
+  }
+  .wa-btn:hover { transform: scale(1.02); }
+  .wa-btn:active { transform: scale(0.98); }
 
   @keyframes waPulse {
-    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3); }
-    50% { box-shadow: 0 4px 30px rgba(37,211,102,0.8), 0 0 0 10px rgba(37,211,102,0.1); }
+    0%,100% { box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4); }
+    50%      { box-shadow: 0 0 50px rgba(37,211,102,0.8), 0 0 0 8px rgba(37,211,102,0.15); }
   }
 
-  @media (max-width: 600px) {
-    .stats-bar { gap: 2rem; }
-    .games-grid { grid-template-columns: repeat(2, 1fr); }
-    nav { padding: 1rem; }
-    .nav-cta { font-size: 0.8rem; padding: 0.5rem 1rem; }
-    #wa-fab { right: 14px; bottom: 16px; }
+  .wa-btn-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+  .wa-btn-top svg { width: 28px; height: 28px; fill: #fff; flex-shrink: 0; }
+  .wa-btn-sub {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Seguridad */
+  .security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: #ffffff55;
+    font-size: 11px;
+    letter-spacing: 1px;
   }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">GanamosNet</div>
-  <a href="https://ganamosnet.org" class="nav-cta">Jugá Ahora</a>
-</nav>
+<div class="landing">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="floating-icons">
-    <span class="fi">🎰</span>
-    <span class="fi">🃏</span>
-    <span class="fi">🎲</span>
-    <span class="fi">♠️</span>
-    <span class="fi">🎡</span>
-    <span class="fi">💎</span>
+  <!-- Partículas -->
+  <div class="particles" id="particles"></div>
+  <div class="shine"></div>
+
+  <!-- BADGES TOP -->
+  <div class="badges">
+    <div class="badge badge-1">
+      <span class="badge-icon">🎰</span>
+      <span class="badge-text">Los premios ya están saliendo</span>
+    </div>
+    <div class="badge badge-2">
+      <span class="badge-icon">⚡</span>
+      <span class="badge-text">Retiros rápidos</span>
+    </div>
+    <div class="badge badge-3">
+      <span class="badge-icon">✅</span>
+      <span class="badge-text">Pagamos todos los premios</span>
+    </div>
+    <div class="badge badge-4" onclick="abrirWA()">
+      <span class="badge-icon">🎯</span>
+      <span class="badge-text">¡Probá tu suerte ahora!</span>
+    </div>
   </div>
 
-  <div class="badge">✦ La experiencia de casino definitiva</div>
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <div class="logo-ring">
+      <img class="logo-img" src="logo.png" alt="Red Estrella" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
+      <div id="logo-fallback" style="display:none;position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,#1a0a00,#3d1500);z-index:1;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+        <div style="font-size:48px;">⭐</div>
+        <div style="font-family:'Bebas Neue';font-size:22px;color:#FFD700;letter-spacing:3px;">RED ESTRELLA</div>
+      </div>
+    </div>
+  </div>
 
-  <h1 class="hero-title">
-    <span class="line1">JUGÁ</span>
-    <span class="line2">Y GANÁ</span>
-  </h1>
+  <!-- ACTIVOS -->
+  <div class="activos-badge">
+    <div class="activos-dot"></div>
+    ✦ Activos las 24 hs ✦
+  </div>
 
-  <p class="hero-sub">
-    La plataforma de juegos <span>100% gratis</span> más emocionante de Argentina. Casino, cartas y más — todo desde tu celular.
-  </p>
+  <!-- BOTÓN WA -->
+  <div class="wa-section">
+    <button class="wa-btn" onclick="abrirWA()">
+      <div class="wa-btn-top">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        HABLAR POR WHATSAPP
+      </div>
+      <div class="wa-btn-sub">Tocá acá y empezá ahora</div>
+    </button>
+    <div class="security">🔒 Conexión segura · Respuesta inmediata</div>
+  </div>
 
-  <div class="hero-buttons">
-    <a href="https://ganamosnet.org" class="btn-primary">🎰 Jugar Ahora</a>
-    <a href="#juegos" class="btn-secondary">Ver Juegos</a>
-  </div>
-</section>
-
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat">
-    <div class="stat-num">50K+</div>
-    <div class="stat-label">Jugadores activos</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">200+</div>
-    <div class="stat-label">Juegos disponibles</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">24/7</div>
-    <div class="stat-label">Siempre online</div>
-  </div>
-  <div class="stat">
-    <div class="stat-num">100%</div>
-    <div class="stat-label">Gratis y seguro</div>
-  </div>
 </div>
 
-<!-- JUEGOS -->
-<section class="section" id="juegos">
-  <div class="reveal">
-    <div class="section-label">Entretenimiento</div>
-    <h2 class="section-title">NUESTROS <span class="highlight">JUEGOS</span></h2>
-    <div class="divider"></div>
-    <p class="section-desc">Tragamonedas, póker, ruleta y mucho más. Todo sin costo, con emoción real.</p>
-  </div>
-  <div class="games-grid reveal">
-    <div class="game-card"><span class="game-icon">🎰</span><div class="game-name">Tragamonedas</div><div class="game-desc">Slots con jackpots épicos</div></div>
-    <div class="game-card"><span class="game-icon">🎡</span><div class="game-name">Ruleta</div><div class="game-desc">Europea y americana</div></div>
-    <div class="game-card"><span class="game-icon">🃏</span><div class="game-name">Blackjack</div><div class="game-desc">21 en tiempo real</div></div>
-    <div class="game-card"><span class="game-icon">♠️</span><div class="game-name">Póker</div><div class="game-desc">Texas Hold'em y más</div></div>
-    <div class="game-card"><span class="game-icon">🎲</span><div class="game-name">Dados</div><div class="game-desc">Craps y baccarat</div></div>
-    <div class="game-card"><span class="game-icon">💎</span><div class="game-name">VIP Lounge</div><div class="game-desc">Sala exclusiva premium</div></div>
-  </div>
-</section>
+<!-- SISTEMA WA CON FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<!-- FEATURES -->
-<section style="background: var(--dark2); border-top: 1px solid rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,255,255,0.04); padding: 6rem 2rem;">
-  <div class="section" style="padding: 0;">
-    <div class="reveal">
-      <div class="section-label">Por qué elegirnos</div>
-      <h2 class="section-title">LA MEJOR <span class="highlight">EXPERIENCIA</span></h2>
-      <div class="divider"></div>
-    </div>
-    <div class="features-grid reveal">
-      <div class="feature-card"><div class="feature-icon">⚡</div><div><div class="feature-title">Instantáneo</div><div class="feature-text">Sin descargas. Jugá desde el navegador en segundos desde cualquier dispositivo.</div></div></div>
-      <div class="feature-card"><div class="feature-icon">🔒</div><div><div class="feature-title">100% Seguro</div><div class="feature-text">Plataforma encriptada. Tus datos siempre protegidos.</div></div></div>
-      <div class="feature-card"><div class="feature-icon">🎁</div><div><div class="feature-title">Bonos diarios</div><div class="feature-text">Chips gratis todos los días. Torneos y premios especiales cada semana.</div></div></div>
-      <div class="feature-card"><div class="feature-icon">📱</div><div><div class="feature-title">Mobile First</div><div class="feature-text">Diseñado para celular. Jugá en el colectivo, en casa, donde quieras.</div></div></div>
-      <div class="feature-card"><div class="feature-icon">🏆</div><div><div class="feature-title">Torneos</div><div class="feature-text">Competí con jugadores de todo el país y subí al ranking.</div></div></div>
-      <div class="feature-card"><div class="feature-icon">💬</div><div><div class="feature-title">Soporte 24/7</div><div class="feature-text">Nuestro equipo te responde por WhatsApp en minutos.</div></div></div>
-    </div>
-  </div>
-</section>
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAw6aV8a0aJyrOA_5miXajbojv1JKEJ4jg",
+    authDomain: "ganamosnet-12cca.firebaseapp.com",
+    projectId: "ganamosnet-12cca",
+    storageBucket: "ganamosnet-12cca.firebasestorage.app",
+    messagingSenderId: "337775620491",
+    appId: "1:337775620491:web:8978522a1ace8e2e8c7f8e"
+  };
 
-<!-- CTA -->
-<section class="cta-section">
-  <h2 class="cta-title">
-    ¿LISTO PARA<br>
-    <span style="background: linear-gradient(135deg, var(--gold), var(--gold2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GANAR?</span>
-  </h2>
-  <p class="cta-sub">Unite a miles de jugadores. Registrate gratis y empezá a jugar hoy mismo.</p>
-  <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1;">
-    <a href="https://ganamosnet.org" class="btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.8rem;">🎰 Jugar Ahora</a>
-  </div>
-</section>
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db = getFirestore(app);
 
-<!-- FOOTER -->
-<footer>
-  <span class="logo">GanamosNet</span>
-  <p>© 2026 ganamosnet.org — Plataforma de juegos gratuitos online · Solo para mayores de 18 años</p>
-</footer>
+  const waMensaje = encodeURIComponent("¡Hola! Quiero jugar en Red Estrella 🎰");
+  let waNumeros = [];
+  let waIndex = parseInt(localStorage.getItem('gn_wa_idx') || '0');
 
-<!-- BOTÓN WHATSAPP FLOTANTE CON ROTACIÓN -->
-<button id="wa-fab" aria-label="Contactar por WhatsApp" onclick="abrirWA()">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  <div class="wa-tooltip">💬 Chateá con nosotros</div>
-</button>
+  onSnapshot(doc(db, 'config', 'whatsapp'), (snap) => {
+    if (snap.exists()) waNumeros = snap.data().numeros || [];
+  });
 
-<script>
-// ═══════════════════════════════════════════════════════
-//  SISTEMA DE ROTACIÓN DE NÚMEROS WHATSAPP
-//  Para agregar/cambiar números: editá el array waNumeros
-//  Estado: "activo" | "revision" | "inactivo"
-// ═══════════════════════════════════════════════════════
-const waNumeros = [
-  { numero: "5493541688662", estado: "activo" },
-  { numero: "5491165671204", estado: "activo" },
-  // Agregá más números acá:
-  // { numero: "549XXXXXXXXXX", estado: "activo" },
-];
-
-const waMensaje = encodeURIComponent("¡Hola! Quiero jugar en GanamosNet 🎰");
-
-// Índice rotativo — cada usuario nuevo agarra el siguiente número activo
-let waIndex = parseInt(localStorage.getItem('gn_wa_idx') || '0');
-
-function getNumeroActivo() {
-  const activos = waNumeros.filter(n => n.estado === "activo");
-  if (!activos.length) return null;
-  const idx = waIndex % activos.length;
-  return activos[idx];
-}
-
-function abrirWA() {
-  const entry = getNumeroActivo();
-  if (!entry) {
-    alert("En este momento no hay líneas disponibles. Intentá en unos minutos.");
-    return;
-  }
-
-  const url = "https://wa.me/" + entry.numero + "?text=" + waMensaje;
-  const ventana = window.open(url, '_blank');
-
-  // Avanzar al siguiente número para el próximo usuario
-  waIndex++;
-  localStorage.setItem('gn_wa_idx', waIndex);
-
-  // Detectar si WhatsApp no abrió (número posiblemente en revisión)
-  const t = Date.now();
-  const check = setInterval(() => {
-    if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
-      clearInterval(check);
-      // Marcar número como en revisión y probar el siguiente
-      entry.estado = "revision";
-      abrirWA(); // reintenta con el siguiente automáticamente
+  window.abrirWA = function() {
+    const activos = waNumeros.filter(n => n.estado === 'activo');
+    if (!activos.length) {
+      alert("En este momento no hay líneas disponibles. Intentá en unos minutos.");
+      return;
     }
-    if (Date.now() - t > 6000) clearInterval(check);
-  }, 500);
-}
-// ═══════════════════════════════════════════════════════
+    const entry = activos[waIndex % activos.length];
+    const url = "https://wa.me/" + entry.numero + "?text=" + waMensaje;
+    window.open(url, '_blank');
+    waIndex++;
+    localStorage.setItem('gn_wa_idx', waIndex);
+    const t = Date.now();
+    const check = setInterval(() => {
+      if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
+        clearInterval(check);
+        waIndex++;
+        localStorage.setItem('gn_wa_idx', waIndex);
+        window.abrirWA();
+      }
+      if (Date.now() - t > 6000) clearInterval(check);
+    }, 500);
+  };
 </script>
 
+<!-- PARTÍCULAS -->
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  const counters = document.querySelectorAll('.stat-num');
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const text = el.textContent;
-        const num = parseInt(text.replace(/\D/g, ''));
-        const suffix = text.replace(/[\d]/g, '');
-        if (!num) return;
-        let current = 0;
-        const step = num / 60;
-        const timer = setInterval(() => {
-          current += step;
-          if (current >= num) { el.textContent = text; clearInterval(timer); }
-          else { el.textContent = Math.floor(current) + suffix; }
-        }, 20);
-        counterObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  counters.forEach(c => counterObserver.observe(c));
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      animation-duration: ${Math.random() * 8 + 6}s;
+      animation-delay: ${Math.random() * 8}s;
+    `;
+    container.appendChild(p);
+  }
 </script>
 
 </body>
