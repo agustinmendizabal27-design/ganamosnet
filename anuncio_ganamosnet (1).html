@@ -1,95 +1,415 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Red Estrella</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  body { margin: 0; background: #050810; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #0a0005;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .landing {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, #3d0a0a88 0%, transparent 60%),
+      radial-gradient(ellipse 80% 40% at 50% 100%, #1a0a0088 0%, transparent 50%),
+      linear-gradient(180deg, #0d0005 0%, #1a0308 40%, #0d0005 100%);
+    overflow: hidden;
+  }
+
+  /* Partículas flotantes */
+  .particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FFD700cc, transparent);
+    animation: floatUp linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+  }
+
+  /* Shine top */
+  .shine {
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #FFD70033 0%, transparent 70%);
+    animation: shinePulse 3s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes shinePulse {
+    from { opacity: 0.4; transform: translateX(-50%) scale(1); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1.3); }
+  }
+
+  /* BADGES TOP */
+  .badges {
+    width: 100%;
+    max-width: 420px;
+    padding: 16px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+    animation: fadeSlideDown 0.6s ease both;
+  }
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid;
+    backdrop-filter: blur(8px);
+    animation: fadeSlideDown 0.6s ease both;
+  }
+  .badge-icon { font-size: 20px; flex-shrink: 0; }
+  .badge-text { flex: 1; }
+
+  .badge-1 {
+    background: linear-gradient(135deg, #1a0a00cc, #2d1000cc);
+    border-color: #FFD70066;
+    color: #FFD700;
+    animation-delay: 0.1s;
+  }
+  .badge-2 {
+    background: linear-gradient(135deg, #001a0acc, #002d1acc);
+    border-color: #00FF8866;
+    color: #00FF88;
+    animation-delay: 0.2s;
+  }
+  .badge-3 {
+    background: linear-gradient(135deg, #001a00cc, #003300cc);
+    border-color: #44FF4466;
+    color: #44FF44;
+    animation-delay: 0.3s;
+  }
+  .badge-4 {
+    background: linear-gradient(135deg, #FFD700ee, #FFA500ee);
+    border-color: #FFD700;
+    color: #000;
+    font-size: 17px;
+    font-weight: 700;
+    animation-delay: 0.4s;
+    box-shadow: 0 0 20px #FFD70066;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .badge-4:hover { transform: scale(1.02); box-shadow: 0 0 30px #FFD700aa; }
+  .badge-4 .badge-icon { font-size: 22px; }
+
+  /* LOGO CENTER */
+  .logo-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeScaleIn 0.8s ease 0.3s both;
+  }
+  @keyframes fadeScaleIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .logo-ring {
+    position: relative;
+    width: min(280px, 65vw);
+    height: min(280px, 65vw);
+  }
+  .logo-ring::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(#FFD700, #FFA500, #FF6B00, #FFD700);
+    animation: rotateBorder 4s linear infinite;
+    opacity: 0.7;
+  }
+  .logo-ring::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: #0d0005;
+  }
+  @keyframes rotateBorder {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .logo-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: drop-shadow(0 0 20px #FFD70088);
+    animation: logoPulse 3s ease-in-out infinite alternate;
+  }
+  @keyframes logoPulse {
+    from { filter: drop-shadow(0 0 15px #FFD70066); }
+    to   { filter: drop-shadow(0 0 35px #FFD700cc); }
+  }
+
+  /* ACTIVOS badge */
+  .activos-badge {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #FFD70044;
+    border-radius: 30px;
+    color: #FFD700;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px);
+    animation: fadeSlideDown 0.6s ease 0.5s both;
+  }
+  .activos-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #00FF88;
+    box-shadow: 0 0 8px #00FF88;
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* BOTÓN WHATSAPP */
+  .wa-section {
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 16px 20px;
+    position: relative;
+    z-index: 2;
+    animation: fadeSlideUp 0.6s ease 0.6s both;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wa-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+    border: none;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4);
+    animation: waPulse 2s ease-in-out infinite;
+    transition: transform 0.15s;
+    text-decoration: none;
+  }
+  .wa-btn:hover { transform: scale(1.02); }
+  .wa-btn:active { transform: scale(0.98); }
+
+  @keyframes waPulse {
+    0%,100% { box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4); }
+    50%      { box-shadow: 0 0 50px rgba(37,211,102,0.8), 0 0 0 8px rgba(37,211,102,0.15); }
+  }
+
+  .wa-btn-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 3px;
+  }
+  .wa-btn-top svg { width: 28px; height: 28px; fill: #fff; flex-shrink: 0; }
+  .wa-btn-sub {
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Seguridad */
+  .security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: #ffffff55;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
 </style>
 </head>
 <body>
-<svg width="680" height="680" viewBox="0 0 680 680" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="bgGrad" cx="50%" cy="45%" r="60%">
-      <stop offset="0%" stop-color="#1a1040"/>
-      <stop offset="100%" stop-color="#050810"/>
-    </radialGradient>
-    <radialGradient id="glowCenter" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#7c3aed" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#050810" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FFD700"/>
-      <stop offset="100%" stop-color="#FFA500"/>
-    </linearGradient>
-    <linearGradient id="goldGradV" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFD700"/>
-      <stop offset="100%" stop-color="#cc8800"/>
-    </linearGradient>
-    <clipPath id="roundClip">
-      <rect width="680" height="680" rx="16"/>
-    </clipPath>
-  </defs>
-  <g clip-path="url(#roundClip)">
-    <rect width="680" height="680" fill="url(#bgGrad)"/>
-    <rect width="680" height="680" fill="url(#glowCenter)"/>
-    <line x1="0" y1="60" x2="680" y2="60" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="120" x2="680" y2="120" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="180" x2="680" y2="180" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="240" x2="680" y2="240" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="300" x2="680" y2="300" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="360" x2="680" y2="360" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="420" x2="680" y2="420" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="480" x2="680" y2="480" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="540" x2="680" y2="540" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="0" y1="600" x2="680" y2="600" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="60" y1="0" x2="60" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="120" y1="0" x2="120" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="180" y1="0" x2="180" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="240" y1="0" x2="240" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="300" y1="0" x2="300" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="360" y1="0" x2="360" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="420" y1="0" x2="420" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="480" y1="0" x2="480" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="540" y1="0" x2="540" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <line x1="600" y1="0" x2="600" y2="680" stroke="#ffffff08" stroke-width="1"/>
-    <polygon points="340,120 410,240 270,240" fill="none" stroke="#FFD70022" stroke-width="1"/>
-    <polygon points="340,120 440,280 240,280" fill="none" stroke="#FFD70018" stroke-width="1"/>
-    <polygon points="340,100 460,310 220,310" fill="none" stroke="#FFD70012" stroke-width="1"/>
-    <circle cx="340" cy="340" r="200" fill="none" stroke="#FFD70015" stroke-width="1"/>
-    <circle cx="340" cy="340" r="240" fill="none" stroke="#7c3aed18" stroke-width="1"/>
-    <rect x="60" y="155" width="80" height="110" rx="10" fill="#1a1535" stroke="#FFD70033" stroke-width="1.5"/>
-    <rect x="63" y="158" width="74" height="50" rx="6" fill="#FFD700" opacity="0.12"/>
-    <text x="100" y="192" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#FFD700" opacity="0.9">A</text>
-    <text x="100" y="245" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#FFD700" opacity="0.7">♠</text>
-    <rect x="540" y="155" width="80" height="110" rx="10" fill="#1a1535" stroke="#FFD70033" stroke-width="1.5" transform="rotate(15 580 210)"/>
-    <text x="580" y="198" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#e88" opacity="0.9" transform="rotate(15 580 210)">K</text>
-    <text x="580" y="245" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#e88" opacity="0.7" transform="rotate(15 580 210)">♥</text>
-    <rect x="520" y="420" width="80" height="110" rx="10" fill="#1a1535" stroke="#FFD70033" stroke-width="1.5" transform="rotate(-10 560 475)"/>
-    <text x="558" y="468" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#adf" opacity="0.8" transform="rotate(-10 560 475)">J</text>
-    <text x="558" y="515" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#adf" opacity="0.7" transform="rotate(-10 560 475)">♣</text>
-    <circle cx="120" cy="430" r="38" fill="#1a1535" stroke="#FFD70044" stroke-width="2"/>
-    <circle cx="120" cy="430" r="30" fill="none" stroke="#FFD70022" stroke-width="1"/>
-    <circle cx="114" cy="424" r="5" fill="#FFD700" opacity="0.8"/>
-    <circle cx="126" cy="424" r="5" fill="#FFD700" opacity="0.8"/>
-    <circle cx="120" cy="436" r="5" fill="#FFD700" opacity="0.8"/>
-    <circle cx="108" cy="436" r="5" fill="#ffffff" opacity="0.5"/>
-    <circle cx="132" cy="436" r="5" fill="#ffffff" opacity="0.5"/>
-    <circle cx="114" cy="448" r="5" fill="#ffffff" opacity="0.5"/>
-    <circle cx="126" cy="448" r="5" fill="#ffffff" opacity="0.5"/>
-    <polygon points="610,490 630,460 650,490" fill="none" stroke="#00e5ff33" stroke-width="1.5"/>
-    <polygon points="610,490 650,490 630,520" fill="none" stroke="#00e5ff22" stroke-width="1"/>
-    <rect x="100" y="260" width="480" height="6" rx="3" fill="url(#goldGrad)" opacity="0.9"/>
-    <text x="340" y="340" text-anchor="middle" font-family="Impact, sans-serif" font-size="96" font-weight="900" fill="url(#goldGradV)" opacity="0.95" letter-spacing="8">GANAMOSNET</text>
-    <text x="340" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="400" fill="#c0d0f0" letter-spacing="6">ENTRETENIMIENTO GRATIS</text>
-    <rect x="100" y="405" width="480" height="6" rx="3" fill="url(#goldGrad)" opacity="0.9"/>
-    <rect x="140" y="470" width="400" height="58" rx="4" fill="url(#goldGrad)"/>
-    <text x="340" y="507" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#050810" letter-spacing="3">JUGÁ AHORA · PROBÁ SUERTE</text>
-    <text x="340" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#6080a0" letter-spacing="2">RED VERIFICADA · ATENCIÓN 24/7</text>
-    <rect x="40" y="40" width="600" height="600" rx="12" fill="none" stroke="#FFD70033" stroke-width="1.5"/>
-    <rect x="46" y="46" width="588" height="588" rx="10" fill="none" stroke="#FFD70018" stroke-width="1"/>
-    <text x="56" y="68" font-family="Arial, sans-serif" font-size="11" fill="#FFD700" opacity="0.5" letter-spacing="3">★ TORNEO DISPONIBLE</text>
-    <text x="624" y="68" text-anchor="end" font-family="Arial, sans-serif" font-size="11" fill="#00e5ff" opacity="0.5" letter-spacing="2">GRATIS ★</text>
-  </g>
-</svg>
+
+<div class="landing">
+
+  <!-- Partículas -->
+  <div class="particles" id="particles"></div>
+  <div class="shine"></div>
+
+  <!-- BADGES TOP -->
+  <div class="badges">
+    <div class="badge badge-1">
+      <span class="badge-icon">🎰</span>
+      <span class="badge-text">Los premios ya están saliendo</span>
+    </div>
+    <div class="badge badge-2">
+      <span class="badge-icon">⚡</span>
+      <span class="badge-text">Retiros rápidos</span>
+    </div>
+    <div class="badge badge-3">
+      <span class="badge-icon">✅</span>
+      <span class="badge-text">Pagamos todos los premios</span>
+    </div>
+    <div class="badge badge-4" onclick="abrirWA()">
+      <span class="badge-icon">🎯</span>
+      <span class="badge-text">¡Probá tu suerte ahora!</span>
+    </div>
+  </div>
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <div class="logo-ring">
+      <img class="logo-img" src="logo.png" alt="Red Estrella" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
+      <div id="logo-fallback" style="display:none;position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,#1a0a00,#3d1500);z-index:1;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+        <div style="font-size:48px;">⭐</div>
+        <div style="font-family:'Bebas Neue';font-size:22px;color:#FFD700;letter-spacing:3px;">RED ESTRELLA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVOS -->
+  <div class="activos-badge">
+    <div class="activos-dot"></div>
+    ✦ Activos las 24 hs ✦
+  </div>
+
+  <!-- BOTÓN WA -->
+  <div class="wa-section">
+    <button class="wa-btn" onclick="abrirWA()">
+      <div class="wa-btn-top">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        HABLAR POR WHATSAPP
+      </div>
+      <div class="wa-btn-sub">Tocá acá y empezá ahora</div>
+    </button>
+    <div class="security">🔒 Conexión segura · Respuesta inmediata</div>
+  </div>
+
+</div>
+
+<!-- SISTEMA WA CON FIREBASE -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, doc, onSnapshot }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyAw6aV8a0aJyrOA_5miXajbojv1JKEJ4jg",
+    authDomain: "ganamosnet-12cca.firebaseapp.com",
+    projectId: "ganamosnet-12cca",
+    storageBucket: "ganamosnet-12cca.firebasestorage.app",
+    messagingSenderId: "337775620491",
+    appId: "1:337775620491:web:8978522a1ace8e2e8c7f8e"
+  };
+
+  const app = initializeApp(FIREBASE_CONFIG);
+  const db = getFirestore(app);
+
+  const waMensaje = encodeURIComponent("¡Hola! Quiero jugar en Red Estrella 🎰");
+  let waNumeros = [];
+  let waIndex = parseInt(localStorage.getItem('gn_wa_idx') || '0');
+
+  onSnapshot(doc(db, 'config', 'whatsapp'), (snap) => {
+    if (snap.exists()) waNumeros = snap.data().numeros || [];
+  });
+
+  window.abrirWA = function() {
+    const activos = waNumeros.filter(n => n.estado === 'activo');
+    if (!activos.length) {
+      alert("En este momento no hay líneas disponibles. Intentá en unos minutos.");
+      return;
+    }
+    const entry = activos[waIndex % activos.length];
+    const url = "https://wa.me/" + entry.numero + "?text=" + waMensaje;
+    window.open(url, '_blank');
+    waIndex++;
+    localStorage.setItem('gn_wa_idx', waIndex);
+    const t = Date.now();
+    const check = setInterval(() => {
+      if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
+        clearInterval(check);
+        waIndex++;
+        localStorage.setItem('gn_wa_idx', waIndex);
+        window.abrirWA();
+      }
+      if (Date.now() - t > 6000) clearInterval(check);
+    }, 500);
+  };
+</script>
+
+<!-- PARTÍCULAS -->
+<script>
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random() * 100}%;
+      animation-duration: ${Math.random() * 8 + 6}s;
+      animation-delay: ${Math.random() * 8}s;
+    `;
+    container.appendChild(p);
+  }
+</script>
+
 </body>
 </html>
