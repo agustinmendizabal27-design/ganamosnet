@@ -7,13 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    width: 100%; height: 100%;
-    overflow: hidden;
-    background: #0a0005;
-    font-family: 'Oswald', sans-serif;
-  }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
 
   .landing {
     position: fixed;
@@ -23,115 +17,165 @@
     align-items: center;
     justify-content: space-between;
     background:
-      radial-gradient(ellipse 120% 60% at 50% 0%, #3d0a0a88 0%, transparent 60%),
-      radial-gradient(ellipse 80% 40% at 50% 100%, #1a0a0088 0%, transparent 50%),
-      linear-gradient(180deg, #0d0005 0%, #1a0308 40%, #0d0005 100%);
+      radial-gradient(ellipse 100% 50% at 50% 0%, #8B0000 0%, #4a0000 30%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 20% 50%, #7a3300 0%, transparent 50%),
+      radial-gradient(ellipse 80% 50% at 80% 50%, #5c1a00 0%, transparent 50%),
+      radial-gradient(ellipse 100% 60% at 50% 100%, #3d1a00 0%, #1a0800 50%, transparent 80%),
+      linear-gradient(180deg, #2d0000 0%, #1a0800 35%, #2d1000 65%, #1a0500 100%);
     overflow: hidden;
+    font-family: 'Oswald', sans-serif;
   }
 
-  /* Partículas flotantes */
-  .particles {
+  /* FONDO ANIMADO */
+  .bg-glow {
     position: absolute;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
   }
-  .particle {
+  .bg-glow::before {
+    content: '';
     position: absolute;
-    border-radius: 50%;
-    background: radial-gradient(circle, #FFD700cc, transparent);
-    animation: floatUp linear infinite;
-    opacity: 0;
-  }
-  @keyframes floatUp {
-    0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-    10%  { opacity: 0.6; }
-    90%  { opacity: 0.3; }
-    100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-  }
-
-  /* Shine top */
-  .shine {
-    position: absolute;
-    top: -100px; left: 50%;
+    top: 20%; left: 50%;
     transform: translateX(-50%);
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, #FFD70033 0%, transparent 70%);
-    animation: shinePulse 3s ease-in-out infinite alternate;
-    pointer-events: none;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #FF6B0044 0%, #FFD70022 40%, transparent 70%);
+    animation: glowPulse 3s ease-in-out infinite alternate;
   }
-  @keyframes shinePulse {
-    from { opacity: 0.4; transform: translateX(-50%) scale(1); }
-    to   { opacity: 1; transform: translateX(-50%) scale(1.3); }
+  .bg-glow::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 10% 30%, #FF4400aa 0%, transparent 25%),
+      radial-gradient(circle at 90% 30%, #FF2200aa 0%, transparent 25%),
+      radial-gradient(circle at 50% 70%, #FFD70033 0%, transparent 35%);
+    animation: colorShift 4s ease-in-out infinite alternate;
+  }
+  @keyframes glowPulse {
+    from { transform: translateX(-50%) scale(1); opacity: 0.6; }
+    to   { transform: translateX(-50%) scale(1.3); opacity: 1; }
+  }
+  @keyframes colorShift {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
   }
 
-  /* BADGES TOP */
+  /* MONEDAS FLOTANTES */
+  .coins {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .coin {
+    position: absolute;
+    font-size: 24px;
+    animation: coinFloat linear infinite;
+    opacity: 0;
+    filter: drop-shadow(0 0 6px #FFD700);
+  }
+  @keyframes coinFloat {
+    0%   { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 0.8; }
+    100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* DESTELLOS */
+  .sparkle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: #FFD700;
+    border-radius: 50%;
+    animation: sparkleAnim ease-in-out infinite;
+    box-shadow: 0 0 6px #FFD700, 0 0 12px #FFD700;
+  }
+  @keyframes sparkleAnim {
+    0%,100% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1); opacity: 1; }
+  }
+
+  /* BADGES */
   .badges {
     width: 100%;
     max-width: 420px;
-    padding: 16px 16px 0;
+    padding: 14px 12px 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     position: relative;
     z-index: 2;
-    animation: fadeSlideDown 0.6s ease both;
-  }
-  @keyframes fadeSlideDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to   { opacity: 1; transform: translateY(0); }
   }
 
   .badge {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 16px;
+    padding: 11px 16px;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
     text-transform: uppercase;
-    border: 1px solid;
-    backdrop-filter: blur(8px);
-    animation: fadeSlideDown 0.6s ease both;
+    border: 2px solid;
+    animation: fadeSlideDown 0.5s ease both;
+    position: relative;
+    overflow: hidden;
   }
-  .badge-icon { font-size: 20px; flex-shrink: 0; }
-  .badge-text { flex: 1; }
+  .badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    50%,100% { transform: translateX(100%); }
+  }
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .badge-icon { font-size: 22px; flex-shrink: 0; }
 
   .badge-1 {
-    background: linear-gradient(135deg, #1a0a00cc, #2d1000cc);
-    border-color: #FFD70066;
+    background: linear-gradient(135deg, #2a0000dd, #500000dd);
+    border-color: #FF6B00;
     color: #FFD700;
-    animation-delay: 0.1s;
+    animation-delay: 0.05s;
+    box-shadow: 0 0 15px #FF6B0044, inset 0 1px 0 rgba(255,255,255,0.1);
   }
   .badge-2 {
-    background: linear-gradient(135deg, #001a0acc, #002d1acc);
-    border-color: #00FF8866;
+    background: linear-gradient(135deg, #002200dd, #004400dd);
+    border-color: #00DD66;
     color: #00FF88;
-    animation-delay: 0.2s;
+    animation-delay: 0.15s;
+    box-shadow: 0 0 15px #00DD6644, inset 0 1px 0 rgba(255,255,255,0.1);
   }
   .badge-3 {
-    background: linear-gradient(135deg, #001a00cc, #003300cc);
-    border-color: #44FF4466;
-    color: #44FF44;
-    animation-delay: 0.3s;
+    background: linear-gradient(135deg, #003300dd, #005500dd);
+    border-color: #44FF44;
+    color: #88FF88;
+    animation-delay: 0.25s;
+    box-shadow: 0 0 15px #44FF4444, inset 0 1px 0 rgba(255,255,255,0.1);
   }
   .badge-4 {
-    background: linear-gradient(135deg, #FFD700ee, #FFA500ee);
+    background: linear-gradient(135deg, #FFD700, #FF8C00);
     border-color: #FFD700;
     color: #000;
     font-size: 17px;
-    font-weight: 700;
-    animation-delay: 0.4s;
-    box-shadow: 0 0 20px #FFD70066;
+    animation-delay: 0.35s;
+    box-shadow: 0 0 25px #FFD70088, 0 4px 15px rgba(0,0,0,0.4);
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .badge-4:hover { transform: scale(1.02); box-shadow: 0 0 30px #FFD700aa; }
-  .badge-4 .badge-icon { font-size: 22px; }
+  .badge-4:hover { transform: scale(1.02); box-shadow: 0 0 40px #FFD700bb; }
 
-  /* LOGO CENTER */
+  /* LOGO */
   .logo-wrap {
     flex: 1;
     display: flex;
@@ -139,37 +183,57 @@
     justify-content: center;
     position: relative;
     z-index: 2;
-    animation: fadeScaleIn 0.8s ease 0.3s both;
+    animation: fadeScaleIn 0.7s ease 0.3s both;
   }
   @keyframes fadeScaleIn {
-    from { opacity: 0; transform: scale(0.85); }
+    from { opacity: 0; transform: scale(0.8); }
     to   { opacity: 1; transform: scale(1); }
   }
 
-  .logo-ring {
+  .logo-container {
     position: relative;
-    width: min(280px, 65vw);
-    height: min(280px, 65vw);
+    width: min(260px, 62vw);
+    height: min(260px, 62vw);
   }
-  .logo-ring::before {
-    content: '';
+
+  /* Anillo exterior animado */
+  .logo-outer-ring {
     position: absolute;
-    inset: -8px;
+    inset: -12px;
     border-radius: 50%;
-    background: conic-gradient(#FFD700, #FFA500, #FF6B00, #FFD700);
-    animation: rotateBorder 4s linear infinite;
-    opacity: 0.7;
+    background: conic-gradient(
+      #FFD700 0deg, #FF8C00 60deg, #FF4500 120deg,
+      #FFD700 180deg, #FFA500 240deg, #FF6B00 300deg, #FFD700 360deg
+    );
+    animation: rotateFast 3s linear infinite;
+    filter: blur(1px);
   }
-  .logo-ring::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: #0d0005;
-  }
-  @keyframes rotateBorder {
+  @keyframes rotateFast {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
+  }
+
+  /* Anillo interior */
+  .logo-inner-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #1a0800, #0d0400);
+    border: 3px solid #FFD700;
+    box-shadow: 0 0 20px #FFD70066, inset 0 0 20px #FFD70022;
+  }
+
+  /* Glow detrás del logo */
+  .logo-glow {
+    position: absolute;
+    inset: -30px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FF6B0066 0%, #FFD70033 40%, transparent 70%);
+    animation: logoPulse 2s ease-in-out infinite alternate;
+  }
+  @keyframes logoPulse {
+    from { transform: scale(0.9); opacity: 0.7; }
+    to   { transform: scale(1.1); opacity: 1; }
   }
 
   .logo-img {
@@ -179,15 +243,22 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    filter: drop-shadow(0 0 20px #FFD70088);
-    animation: logoPulse 3s ease-in-out infinite alternate;
-  }
-  @keyframes logoPulse {
-    from { filter: drop-shadow(0 0 15px #FFD70066); }
-    to   { filter: drop-shadow(0 0 35px #FFD700cc); }
   }
 
-  /* ACTIVOS badge */
+  .logo-fallback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a0800, #3d1500);
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* ACTIVOS */
   .activos-badge {
     position: relative;
     z-index: 2;
@@ -195,32 +266,32 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 20px;
-    background: rgba(0,0,0,0.6);
-    border: 1px solid #FFD70044;
+    padding: 8px 24px;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(50,20,0,0.7));
+    border: 1px solid #FFD70066;
     border-radius: 30px;
     color: #FFD700;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
-    backdrop-filter: blur(8px);
-    animation: fadeSlideDown 0.6s ease 0.5s both;
+    box-shadow: 0 0 15px #FFD70033;
+    animation: fadeScaleIn 0.6s ease 0.5s both;
   }
   .activos-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
     background: #00FF88;
-    box-shadow: 0 0 8px #00FF88;
+    box-shadow: 0 0 8px #00FF88, 0 0 16px #00FF8866;
     animation: blink 1.5s ease-in-out infinite;
   }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
-  /* BOTÓN WHATSAPP */
+  /* BOTÓN WA */
   .wa-section {
     width: 100%;
     max-width: 420px;
-    padding: 12px 16px 20px;
+    padding: 10px 12px 18px;
     position: relative;
     z-index: 2;
     animation: fadeSlideUp 0.6s ease 0.6s both;
@@ -232,26 +303,40 @@
 
   .wa-btn {
     width: 100%;
-    padding: 18px;
-    border-radius: 16px;
-    border: none;
-    background: linear-gradient(135deg, #25D366, #128C7E);
+    padding: 16px;
+    border-radius: 14px;
+    border: 3px solid #00FF66;
+    background: linear-gradient(135deg, #1DB954, #25D366, #128C7E);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4);
+    gap: 3px;
+    box-shadow:
+      0 0 30px rgba(37,211,102,0.6),
+      0 0 60px rgba(37,211,102,0.3),
+      0 4px 20px rgba(0,0,0,0.5);
     animation: waPulse 2s ease-in-out infinite;
     transition: transform 0.15s;
-    text-decoration: none;
+    position: relative;
+    overflow: hidden;
   }
-  .wa-btn:hover { transform: scale(1.02); }
-  .wa-btn:active { transform: scale(0.98); }
-
+  .wa-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: waShimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes waShimmer {
+    0% { left: -100%; }
+    50%,100% { left: 100%; }
+  }
+  .wa-btn:active { transform: scale(0.97); }
   @keyframes waPulse {
-    0%,100% { box-shadow: 0 0 30px rgba(37,211,102,0.5), 0 4px 20px rgba(0,0,0,0.4); }
-    50%      { box-shadow: 0 0 50px rgba(37,211,102,0.8), 0 0 0 8px rgba(37,211,102,0.15); }
+    0%,100% { box-shadow: 0 0 30px rgba(37,211,102,0.6), 0 0 60px rgba(37,211,102,0.3), 0 4px 20px rgba(0,0,0,0.5); }
+    50%      { box-shadow: 0 0 50px rgba(37,211,102,0.9), 0 0 80px rgba(37,211,102,0.5), 0 0 0 6px rgba(37,211,102,0.2); }
   }
 
   .wa-btn-top {
@@ -260,26 +345,27 @@
     gap: 10px;
     color: #fff;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
+    font-size: 28px;
     letter-spacing: 3px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
-  .wa-btn-top svg { width: 28px; height: 28px; fill: #fff; flex-shrink: 0; }
+  .wa-btn-top svg { width: 30px; height: 30px; fill: #fff; flex-shrink: 0; }
   .wa-btn-sub {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.9);
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 700;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
   }
 
-  /* Seguridad */
   .security {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    margin-top: 10px;
-    color: #ffffff55;
+    margin-top: 8px;
+    color: #ffffff66;
     font-size: 11px;
     letter-spacing: 1px;
   }
@@ -288,38 +374,41 @@
 <body>
 
 <div class="landing">
+  <div class="bg-glow"></div>
+  <div class="coins" id="coins"></div>
+  <div id="sparkles"></div>
 
-  <!-- Partículas -->
-  <div class="particles" id="particles"></div>
-  <div class="shine"></div>
-
-  <!-- BADGES TOP -->
+  <!-- BADGES -->
   <div class="badges">
     <div class="badge badge-1">
       <span class="badge-icon">🎰</span>
-      <span class="badge-text">Los premios ya están saliendo</span>
+      <span>Los premios ya están saliendo</span>
     </div>
     <div class="badge badge-2">
       <span class="badge-icon">⚡</span>
-      <span class="badge-text">Retiros rápidos</span>
+      <span>Retiros rápidos</span>
     </div>
     <div class="badge badge-3">
       <span class="badge-icon">✅</span>
-      <span class="badge-text">Pagamos todos los premios</span>
+      <span>Pagamos todos los premios</span>
     </div>
     <div class="badge badge-4" onclick="abrirWA()">
       <span class="badge-icon">🎯</span>
-      <span class="badge-text">¡Probá tu suerte ahora!</span>
+      <span>¡Probá tu suerte ahora!</span>
     </div>
   </div>
 
   <!-- LOGO -->
   <div class="logo-wrap">
-    <div class="logo-ring">
-      <img class="logo-img" src="logo.png" alt="Red Estrella" onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
-      <div id="logo-fallback" style="display:none;position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,#1a0a00,#3d1500);z-index:1;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
-        <div style="font-size:48px;">⭐</div>
-        <div style="font-family:'Bebas Neue';font-size:22px;color:#FFD700;letter-spacing:3px;">RED ESTRELLA</div>
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <div class="logo-outer-ring"></div>
+      <div class="logo-inner-ring"></div>
+      <img class="logo-img" src="logo.png" alt="Red Estrella"
+        onerror="this.style.display='none';document.getElementById('logo-fallback').style.display='flex'" />
+      <div id="logo-fallback" class="logo-fallback">
+        <div style="font-size:52px;">⭐</div>
+        <div style="font-family:'Bebas Neue';font-size:24px;color:#FFD700;letter-spacing:3px;">RED ESTRELLA</div>
       </div>
     </div>
   </div>
@@ -341,10 +430,8 @@
     </button>
     <div class="security">🔒 Conexión segura · Respuesta inmediata</div>
   </div>
-
 </div>
 
-<!-- SISTEMA WA CON FIREBASE -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, doc, onSnapshot }
@@ -361,7 +448,6 @@
 
   const app = initializeApp(FIREBASE_CONFIG);
   const db = getFirestore(app);
-
   const waMensaje = encodeURIComponent("¡Hola! Quiero jugar en Red Estrella 🎰");
   let waNumeros = [];
   let waIndex = parseInt(localStorage.getItem('gn_wa_idx') || '0');
@@ -372,44 +458,40 @@
 
   window.abrirWA = function() {
     const activos = waNumeros.filter(n => n.estado === 'activo');
-    if (!activos.length) {
-      alert("En este momento no hay líneas disponibles. Intentá en unos minutos.");
-      return;
-    }
+    if (!activos.length) { alert("No hay líneas disponibles. Intentá en unos minutos."); return; }
     const entry = activos[waIndex % activos.length];
-    const url = "https://wa.me/" + entry.numero + "?text=" + waMensaje;
-    window.open(url, '_blank');
+    window.open("https://wa.me/" + entry.numero + "?text=" + waMensaje, '_blank');
     waIndex++;
     localStorage.setItem('gn_wa_idx', waIndex);
     const t = Date.now();
     const check = setInterval(() => {
       if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
-        clearInterval(check);
-        waIndex++;
-        localStorage.setItem('gn_wa_idx', waIndex);
-        window.abrirWA();
+        clearInterval(check); waIndex++; localStorage.setItem('gn_wa_idx', waIndex); window.abrirWA();
       }
       if (Date.now() - t > 6000) clearInterval(check);
     }, 500);
   };
 </script>
 
-<!-- PARTÍCULAS -->
 <script>
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 18; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 6 + 2;
-    p.style.cssText = `
-      width: ${size}px; height: ${size}px;
-      left: ${Math.random() * 100}%;
-      animation-duration: ${Math.random() * 8 + 6}s;
-      animation-delay: ${Math.random() * 8}s;
-    `;
-    container.appendChild(p);
+  // Monedas flotantes
+  const coins = document.getElementById('coins');
+  const emojis = ['🪙','💰','⭐','💛','🌟'];
+  for (let i = 0; i < 20; i++) {
+    const c = document.createElement('div');
+    c.className = 'coin';
+    c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.cssText = `left:${Math.random()*100}%;font-size:${Math.random()*16+14}px;animation-duration:${Math.random()*8+7}s;animation-delay:${Math.random()*10}s;`;
+    coins.appendChild(c);
+  }
+  // Destellos
+  const sp = document.getElementById('sparkles');
+  for (let i = 0; i < 15; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*2+1}s;animation-delay:${Math.random()*3}s;`;
+    sp.appendChild(s);
   }
 </script>
-
 </body>
 </html>
