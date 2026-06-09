@@ -173,6 +173,7 @@ src="https://www.facebook.com/tr?id=1324153156327968&ev=PageView&noscript=1"
     const activos = waNumeros.filter(n => n.estado === 'activo');
     if (!activos.length) { alert("No hay líneas disponibles. Intentá en unos minutos."); return; }
     const entry = activos[waIndex % activos.length];
+    fbq('track', 'Lead');
     window.open("https://wa.me/" + entry.numero + "?text=" + waMensaje, '_blank');
     waIndex++;
     localStorage.setItem('gn_wa_idx', waIndex);
