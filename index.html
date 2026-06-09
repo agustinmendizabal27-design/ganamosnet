@@ -169,18 +169,34 @@ src="https://www.facebook.com/tr?id=1324153156327968&ev=PageView&noscript=1"
     if (snap.exists()) waNumeros = snap.data().numeros || [];
   });
 
+  window._waNumeros = waNumeros;
+  window._waMensaje = waMensaje;
+  window._getWaNumeros = () => waNumeros;
+  window._getWaIndex = () => waIndex;
+  window._setWaIndex = (v) => { waIndex = v; };
+</script>
+
+<script>
   window.abrirWA = function() {
+    const waNumeros = window._getWaNumeros ? window._getWaNumeros() : [];
+    let waIndex = window._getWaIndex ? window._getWaIndex() : 0;
+    const waMensaje = window._waMensaje || encodeURIComponent("¡Hola! Quiero jugar en Red Estrella 🎰");
     const activos = waNumeros.filter(n => n.estado === 'activo');
     if (!activos.length) { alert("No hay líneas disponibles. Intentá en unos minutos."); return; }
     const entry = activos[waIndex % activos.length];
-    fbq('track', 'Lead');
+    if (typeof fbq !== 'undefined') fbq('track', 'Lead');
     window.open("https://wa.me/" + entry.numero + "?text=" + waMensaje, '_blank');
     waIndex++;
+    if (window._setWaIndex) window._setWaIndex(waIndex);
     localStorage.setItem('gn_wa_idx', waIndex);
     const t = Date.now();
     const check = setInterval(() => {
       if (document.visibilityState === 'visible' && Date.now() - t > 1500 && Date.now() - t < 5000) {
-        clearInterval(check); waIndex++; localStorage.setItem('gn_wa_idx', waIndex); window.abrirWA();
+        clearInterval(check);
+        waIndex++;
+        if (window._setWaIndex) window._setWaIndex(waIndex);
+        localStorage.setItem('gn_wa_idx', waIndex);
+        window.abrirWA();
       }
       if (Date.now() - t > 6000) clearInterval(check);
     }, 500);
