@@ -229,6 +229,19 @@ src="https://www.facebook.com/tr?id=864634119541424&ev=PageView&noscript=1"
     if (!activos.length) { alert("No hay líneas disponibles. Intentá en unos minutos."); return; }
     const entry = activos[waIndex % activos.length];
     if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+
+// API de Conversiones
+fetch('https://ganamosnet-five.vercel.app/api/conversions', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    event_name: 'Lead',
+    client_ip: '',
+    client_user_agent: navigator.userAgent,
+    fbp: document.cookie.match(/_fbp=([^;]+)/)?.[1] || '',
+    fbc: document.cookie.match(/_fbc=([^;]+)/)?.[1] || ''
+  })
+});
     window.open("https://wa.me/" + entry.numero + "?text=" + waMensaje, '_blank');
     waIndex++;
     if (window._setWaIndex2) window._setWaIndex2(waIndex);
