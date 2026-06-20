@@ -7,21 +7,20 @@ export default async function handler(req, res) {
 
   try {
     const body = req.body;
-
-    // Kommo manda los leads actualizados en leads[update]
     const leadsUpdate = body?.leads?.update;
     if (!leadsUpdate || !leadsUpdate.length) {
       return res.status(200).json({ status: 'no_update' });
     }
 
-    const ETAPA_CARGA_CONFIRMADA = process.env.KOMMO_STAGE_ID; // ID de la etapa en Kommo
+    const ETAPA_CARGA_CONFIRMADA = process.env.KOMMO_STAGE_ID;
 
     for (const lead of leadsUpdate) {
       const statusId = lead.status_id?.toString();
 
-      // Solo disparar si el lead llegó a la etapa "Carga confirmada"
       if (statusId === ETAPA_CARGA_CONFIRMADA) {
-        await dispararPurchase();
+        // Leer el presupuesto del lead (monto que cargó)
+        const valor = parseFloat(lead.price) || 0;
+        await dispararPurchase(valor);
       }
     }
 
@@ -33,7 +32,7 @@ export default async function handler(req, res) {
   }
 }
 
-async function dispararPurchase() {
+async function dispararPurchase(valor) {
   const pixelId = process.env.FB_PIXEL_ID;
   const accessToken = process.env.FB_ACCESS_TOKEN;
 
@@ -47,7 +46,7 @@ async function dispararPurchase() {
         client_user_agent: 'Kommo CRM'
       },
       custom_data: {
-        value: 0,
+        value: valor,
         currency: 'ARS'
       }
     }]
