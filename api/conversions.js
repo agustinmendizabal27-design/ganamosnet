@@ -2,12 +2,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
   const { event_name, event_time, client_ip, client_user_agent, fbp, fbc } = req.body;
-
   const pixelId = process.env.FB_PIXEL_ID;
   const accessToken = process.env.FB_ACCESS_TOKEN;
 
@@ -18,10 +16,14 @@ export default async function handler(req, res) {
       action_source: 'website',
       client_ip_address: client_ip || '',
       client_user_agent: client_user_agent || '',
-      event_source_url: 'https://agustinmendizabal27-design.github.io/ganamosnet/',
+      event_source_url: 'https://ganamosnet-five.vercel.app/',
       user_data: {
         fbp: fbp || '',
         fbc: fbc || ''
+      },
+      custom_data: {
+        value: 0,
+        currency: 'ARS'
       }
     }]
   };
