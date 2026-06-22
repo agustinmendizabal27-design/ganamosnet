@@ -5,16 +5,23 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { event_name, event_time, client_ip, client_user_agent, fbp, fbc } = req.body;
+  const { event_name, event_time, client_user_agent, fbp, fbc } = req.body;
   const pixelId = process.env.FB_PIXEL_ID;
   const accessToken = process.env.FB_ACCESS_TOKEN;
+
+  // Capturar IP real del cliente desde los headers de Vercel
+  const ipAddress =
+    req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+    req.headers['x-real-ip'] ||
+    req.socket?.remoteAddress ||
+    '';
 
   const payload = {
     data: [{
       event_name: event_name || 'Lead',
       event_time: event_time || Math.floor(Date.now() / 1000),
       action_source: 'website',
-      client_ip_address: client_ip || '',
+      client_ip_address: ipAddress,
       client_user_agent: client_user_agent || '',
       event_source_url: 'https://ganamosnet-five.vercel.app/',
       user_data: {
