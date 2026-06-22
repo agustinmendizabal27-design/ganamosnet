@@ -9,21 +9,19 @@ async function getLeadContact(leadId) {
   const kommoDomain = process.env.KOMMO_DOMAIN;
 
   try {
-    // Obtener el lead con sus contactos
     const resLead = await fetch(
       `https://${kommoDomain}/api/v4/leads/${leadId}?with=contacts`,
       { headers: { Authorization: `Bearer ${kommoToken}` } }
     );
     const lead = await resLead.json();
-    console.log('Lead data:', JSON.stringify(lead?._embedded?.contacts));
+    console.log('Lead contacts:', JSON.stringify(lead?._embedded?.contacts));
 
     const contactId = lead?._embedded?.contacts?.[0]?.id;
     if (!contactId) {
-      console.log('No se encontró contacto para el lead:', leadId);
+      console.log('No se encontró contacto para lead:', leadId);
       return {};
     }
 
-    // Obtener datos del contacto
     const resContact = await fetch(
       `https://${kommoDomain}/api/v4/contacts/${contactId}`,
       { headers: { Authorization: `Bearer ${kommoToken}` } }
@@ -31,17 +29,15 @@ async function getLeadContact(leadId) {
     const contact = await resContact.json();
     console.log('Contact fields:', JSON.stringify(contact?.custom_fields_values));
 
-    // Buscar teléfono
     const phoneField = contact?.custom_fields_values?.find(f => f.field_code === 'PHONE');
     const rawPhone = phoneField?.values?.[0]?.value || '';
-    const phone = rawPhone.replace(/\D/g, ''); // solo números
+    const phone = rawPhone.replace(/\D/g, '');
 
-    // Buscar email (por si acaso)
     const emailField = contact?.custom_fields_values?.find(f => f.field_code === 'EMAIL');
     const email = emailField?.values?.[0]?.value || '';
 
-    console.log('Teléfono encontrado:', phone);
-    console.log('Email encontrado:', email);
+    console.log('Teléfono:', phone);
+    console.log('Email:', email);
 
     return { phone, email };
   } catch (error) {
@@ -55,11 +51,9 @@ async function dispararPurchase(valor, leadData = {}) {
   const accessToken = process.env.FB_ACCESS_TOKEN;
 
   const user_data = {};
-
   if (leadData.phone) user_data.ph = hashSHA256(leadData.phone);
   if (leadData.email) user_data.em = hashSHA256(leadData.email);
 
-  // Si no hay ningún dato, igual mandamos con lo mínimo
   if (Object.keys(user_data).length === 0) {
     console.log('Sin datos de usuario, enviando con user_data mínimo');
     user_data.client_user_agent = 'Mozilla/5.0';
@@ -123,9 +117,7 @@ export default async function handler(req, res) {
           console.log('Lead ID:', leadId);
           console.log('Disparando Purchase, valor:', valor);
 
-          // Obtener datos del contacto desde Kommo
           const leadData = await getLeadContact(leadId);
-
           await dispararPurchase(valor, leadData);
           disparado = true;
         }
