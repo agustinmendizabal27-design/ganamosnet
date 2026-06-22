@@ -7,19 +7,26 @@ export default async function handler(req, res) {
 
   try {
     const body = req.body;
+
+    // Log para ver qué manda Kommo
+    console.log('KOMMO BODY:', JSON.stringify(body));
+    console.log('KOMMO_STAGE_ID configurado:', process.env.KOMMO_STAGE_ID);
+
     const leadsUpdate = body?.leads?.update;
     if (!leadsUpdate || !leadsUpdate.length) {
+      console.log('No hay leads update');
       return res.status(200).json({ status: 'no_update' });
     }
 
     const ETAPA_CARGA_CONFIRMADA = process.env.KOMMO_STAGE_ID;
 
     for (const lead of leadsUpdate) {
+      console.log('Lead status_id:', lead.status_id, 'Comparando con:', ETAPA_CARGA_CONFIRMADA);
       const statusId = lead.status_id?.toString();
 
       if (statusId === ETAPA_CARGA_CONFIRMADA) {
-        // Leer el presupuesto del lead (monto que cargó)
         const valor = parseFloat(lead.price) || 0;
+        console.log('Disparando Purchase con valor:', valor);
         await dispararPurchase(valor);
       }
     }
@@ -41,7 +48,7 @@ async function dispararPurchase(valor) {
       event_name: 'Purchase',
       event_time: Math.floor(Date.now() / 1000),
       action_source: 'crm',
-      event_source_url: 'https://agustinmendizabal27-design.github.io/ganamosnet/',
+      event_source_url: 'https://ganamosnet-five.vercel.app/',
       user_data: {
         client_user_agent: 'Kommo CRM'
       },
@@ -52,6 +59,8 @@ async function dispararPurchase(valor) {
     }]
   };
 
+  console.log('Enviando Purchase a Meta:', JSON.stringify(payload));
+
   const response = await fetch(
     `https://graph.facebook.com/v18.0/${pixelId}/events?access_token=${accessToken}`,
     {
@@ -61,5 +70,7 @@ async function dispararPurchase(valor) {
     }
   );
 
-  return response.json();
+  const result = await response.json();
+  console.log('Respuesta de Meta:', JSON.stringify(result));
+  return result;
 }
