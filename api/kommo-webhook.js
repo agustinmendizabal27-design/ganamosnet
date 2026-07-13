@@ -4,7 +4,7 @@ function hashSHA256(value) {
   return crypto.createHash('sha256').update(value.trim().toLowerCase()).digest('hex');
 }
 
-async function getLeadContact(leadId) {
+async function getLeadData(leadId) {
   const kommoToken = process.env.KOMMO_TOKEN;
   const kommoDomain = process.env.KOMMO_DOMAIN;
 
@@ -14,12 +14,16 @@ async function getLeadContact(leadId) {
       { headers: { Authorization: `Bearer ${kommoToken}` } }
     );
     const lead = await resLead.json();
-    console.log('Lead contacts:', JSON.stringify(lead?._embedded?.contacts));
+    console.log('Lead completo:', JSON.stringify(lead));
+
+    // Precio real del lead, tomado directamente de la API (no del webhook)
+    const precioReal = parseFloat(lead?.price) || 0;
+    console.log('Precio real desde API:', precioReal);
 
     const contactId = lead?._embedded?.contacts?.[0]?.id;
     if (!contactId) {
       console.log('No se encontró contacto para lead:', leadId);
-      return {};
+      return { valor: precioReal, phone: '', email: '' };
     }
 
     const resContact = await fetch(
@@ -39,10 +43,10 @@ async function getLeadContact(leadId) {
     console.log('Teléfono:', phone);
     console.log('Email:', email);
 
-    return { phone, email };
+    return { valor: precioReal, phone, email };
   } catch (error) {
-    console.error('Error obteniendo contacto de Kommo:', error);
-    return {};
+    console.error('Error obteniendo datos de Kommo:', error);
+    return { valor: 0, phone: '', email: '' };
   }
 }
 
@@ -111,14 +115,15 @@ export default async function handler(req, res) {
         if (statusId === ETAPA_CARGA_CONFIRMADA) {
           const index = key.match(/leads\[update\]\[(\d+)\]/)[1];
           const leadId = body[`leads[update][${index}][id]`];
-          const priceKey = `leads[update][${index}][price]`;
-          const valor = parseFloat(body[priceKey]) || 0;
 
           console.log('Lead ID:', leadId);
-          console.log('Disparando Purchase, valor:', valor);
 
-          const leadData = await getLeadContact(leadId);
-          await dispararPurchase(valor, leadData);
+          // Ahora el precio se obtiene siempre desde la API de Kommo,
+          // no del webhook (que no siempre lo incluye)
+          const leadData = await getLeadData(leadId);
+          console.log('Disparando Purchase, valor real:', leadData.valor);
+
+          await dispararPurchase(leadData.valor, leadData);
           disparado = true;
         }
       }
